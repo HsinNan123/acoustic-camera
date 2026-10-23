@@ -22,7 +22,7 @@ Steps 1-3 run on simulated sound, so no hardware is needed to follow along.
 
 | Step | What it proves | Code | Post |
 |---|---|---|---|
-| 1 | Two mics can find the angle of a sound | not yet | not yet |
+| 1 | Two mics can find the angle of a sound | [`acam/delay.py`](acam/delay.py) | [draft](docs/blog/01-two-mics.md) |
 | 2 | Many mics make a 2D sound map | not yet | not yet |
 | 3 | The map lines up with the video | not yet | not yet |
 | 4 | It works with a real array | not yet | not yet |

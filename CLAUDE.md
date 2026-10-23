@@ -11,8 +11,8 @@ Volatile state (stage, blockers, next, decisions) is `docs/STATUS.md`.
   his public build log.
 - **Goals, in order:** 1. learn the method and explain it; 2. a public build log with a
   demo GIF per step; 3. a working live demo on a real bird.
-- **Stack and where it runs:** Python 3.13, numpy, scipy, pyroomacoustics
-  (simulation), sounddevice (audio in), opencv-python (video and overlay), pytest. Runs
+- **Stack and where it runs:** Python 3.13, numpy, scipy, matplotlib (simulation and
+  plots), pytest; later sounddevice (audio in), opencv-python (video). Runs
   on Aaron's Windows laptop. No server, no web. Public repo:
   https://github.com/HsinNan123/acoustic-camera
 - **Scale:** one user, one machine. Rules out cloud, accounts, database.
@@ -22,13 +22,15 @@ Volatile state (stage, blockers, next, decisions) is `docs/STATUS.md`.
 - `acam/`: core module (geometry, delays, beamformer, map-to-pixels). Tested.
 - `tests/`: pytest, one test file per `acam/` module.
 - `scripts/`: one runnable script per build step (`step1_two_mics.py`, ...).
-- `docs/blog/`: one Markdown chapter per step, the source for each post.
+- `docs/blog/`: one Markdown chapter per step, the source for each post; figures in
+  `docs/blog/img/`, written by the step scripts.
 - Never search: `out/`, `recordings/`, `.venv/`.
 
 ## Commands (from `Acoustic Camera/`)
 - Setup: `python -m venv .venv`, then `.venv\Scripts\pip install -r requirements.txt`.
 - Tests: `.venv\Scripts\python -m pytest`.
-- Dev server: none. A script writes its plot or frame to `out/`; Aaron checks the image.
+- Dev server: none. A step script writes its figures to `docs/blog/img/` and prints
+  the numbers the post uses; Aaron checks the images.
 
 ## Project-specific gate lines
 - Legal: process audio in memory; save no raw audio by default. Clips (step 5 only)

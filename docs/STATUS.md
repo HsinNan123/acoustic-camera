@@ -3,19 +3,18 @@
 Updated: 2026-10-23
 
 ## Stage
-Day -1: repo, docs and plan exist; no code yet.
-Path: simulate first (steps 1-3, no hardware), buy an array after step 2.
-Each step ends with a post (Vocus long-form, LinkedIn short) and a git tag.
+Step 1 code done: two simulated mics find the angle (GCC-PHAT), 10 tests pass.
+Max error 0.5 deg within +-60 deg; chapter 1 draft in `docs/blog/01-two-mics.md`.
+Path: simulate first (steps 1-3), buy an array after step 2. Each step: post + git tag.
 
 ## In progress
-- Nothing yet. Plan: `C:\Users\Aaron\.claude\plans\i-want-to-start-effervescent-pretzel.md`.
+- Post 1: Aaron edits `docs/blog/01-two-mics.md`, posts on Vocus and LinkedIn.
 
 ## Blockers (needs Aaron)
-- None for step 1.
+- Push to GitHub: auto mode blocks Claude from pushing to the public repo.
 
 ## Next (in order)
-1. Step 1: two simulated mics, time delay by cross-correlation (GCC-PHAT), find the
-   angle. Pass: source at 30 deg estimated within 2 deg. Post 1. · Hours: 2.5
+1. Post 1 on Vocus (Chinese) + LinkedIn (English, `step1_sweep.png`). · Hours: 1
 2. Step 2: delay-and-sum beamformer, 2D power map. Simulate the UMA-16 4x4 grid and the
    Sipeed 6-mic circle side by side. Pass: peak within 3 deg at 1, 2, 4 kHz. Post 2:
    "Which array to buy, decided by simulation". · Hours: 3
@@ -32,6 +31,10 @@ Each step ends with a post (Vocus long-form, LinkedIn short) and a git tag.
 - None.
 
 ## Decisions log
+- 2026-10-23: Simulate with numpy plane waves, not pyroomacoustics; why: no echoes
+  needed yet, no extra install. Reverse: add pyroomacoustics when rooms matter.
+- 2026-10-23: `gcc_phat` takes a `band`; why: a 2-6 kHz whistle read 25.8-36.5 deg at
+  30 deg with all frequencies, 30.0 deg with the band. Reverse: drop the argument.
 - 2026-10-23: Simulate before buying hardware; why: learn the limits (beam width,
   aliasing) for free and choose the array from data. Reverse: buy now.
 - 2026-10-23: Public repo from Day -1, framed as a bird hobby; why: proof of work for
