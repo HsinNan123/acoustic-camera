@@ -1,0 +1,7 @@
+numpy
+scipy
+pyroomacoustics
+sounddevice
+opencv-python
+matplotlib
+pytest

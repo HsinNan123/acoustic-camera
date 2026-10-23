@@ -1,0 +1,46 @@
+# Acoustic Camera
+
+A hobby build: find a bird outside my window by its song.
+
+A microphone array hears a sound a few microseconds earlier at one mic than at the
+next. From those delays the code works out the direction of the sound, and draws it
+as a heat map on live video: where the sound is, and how loud.
+
+I build it step by step, in public, and write up what I learn at each step.
+
+## The pipeline
+
+```
+[1 Sound + delay] -> [2 Beamformer map] -> [3 Heat map on video] -> [4 Real array] -> [5 Bird mode]
+  2 simulated mics    16 simulated mics     webcam + overlay         real mic array      bird-song filter,
+  find the angle      scan a grid           volume in dB             live audio          find a real bird
+```
+
+Steps 1-3 run on simulated sound, so no hardware is needed to follow along.
+
+## Build log
+
+| Step | What it proves | Code | Post |
+|---|---|---|---|
+| 1 | Two mics can find the angle of a sound | not yet | not yet |
+| 2 | Many mics make a 2D sound map | not yet | not yet |
+| 3 | The map lines up with the video | not yet | not yet |
+| 4 | It works with a real array | not yet | not yet |
+| 5 | It finds a real bird | not yet | not yet |
+
+## Run it
+
+```
+python -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+.venv\Scripts\python -m pytest
+```
+
+## Privacy
+
+Audio is processed in memory. Nothing is recorded unless bird mode saves a short
+clip, and that clip keeps only the bird-song frequencies.
+
+## Licence
+
+Code: MIT (see `LICENSE`). Blog text in `docs/blog/`: © Aaron, all rights reserved.
