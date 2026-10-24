@@ -69,12 +69,12 @@ def fig_geometry(path):
     corner = foot - s * direction
     ax.plot(*np.array([corner, corner + s * wave, foot + s * wave]).T, "k", lw=0.8)
     ax.text(-3.9, 0.9, "extra path\n= d · sin θ", color="C3", fontsize=9)
-    ax.set_title("The sound reaches mic 1 first; mic 0 waits for the extra path")
+    ax.set_title("Mic 0 hears the sound later, by the extra path d · sin θ")
     ax.set_aspect("equal")
     ax.set_xlim(-4, 4)
     ax.set_ylim(-1.6, 4.3)
-    ax.set_xlabel("cm")
-    ax.set_yticks([])
+    ax.set_xlabel("left-right position along the mic line (cm), 0 = middle of the two mics")
+    ax.set_ylabel("toward the front (cm)")
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
@@ -130,18 +130,30 @@ def fig_correlation(path):
 
 
 def fig_sweep(path, truth, whole, fine):
-    fig, (a, b) = plt.subplots(2, 1, figsize=(6, 6), sharex=True)
-    a.plot(truth, truth, "k:", label="perfect")
-    a.plot(truth, whole, "o-", ms=3, label="whole samples")
-    a.plot(truth, fine, "-", label="16x finer")
-    a.set_ylabel("estimated angle (deg)")
+    fig, (a, b) = plt.subplots(2, 1, figsize=(6, 7), sharex=True)
+    whole_label, fine_label = "delay every 20.8 us (whole samples)", "delay every 1.3 us (16x finer)"
+    a.plot(truth, truth, "k:", label="perfect answer")
+    a.plot(truth, whole, "o-", ms=3, label=whole_label)
+    a.plot(truth, fine, "-", label=fine_label)
+    a.set_ylabel("angle the mics report (deg)")
     a.legend(fontsize=8)
-    a.set_title("Two mics, 4.2 cm apart, 48 kHz, noise 20 dB below the sound")
-    b.plot(truth, np.abs(whole - truth), "o-", ms=3, label="whole samples")
-    b.plot(truth, np.abs(fine - truth), "-", label="16x finer")
-    b.set_xlabel("true angle (deg)")
+    a.set_title("Whole samples allow only 13 answers (the steps);\n16x finer follows the true angle",
+                fontsize=11)
+    for ax in (a, b):
+        ax.axvspan(-60, 60, color="grey", alpha=0.08)
+    b.plot(truth, np.abs(whole - truth), "o-", ms=3, label=whole_label)
+    b.plot(truth, np.abs(fine - truth), "-", label=fine_label)
+    b.text(0, 19, "within ±60 deg (grey)", ha="center", fontsize=8, color="grey")
+    b.set_xlabel("true angle of the sound, set in the simulation (deg)")
     b.set_ylabel("error (deg)")
-    b.legend(fontsize=8)
+    b.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, 0.84))
+    inner = np.abs(truth) <= 60
+    worst_whole = np.max(np.abs(whole - truth)[inner])
+    worst_fine = np.max(np.abs(fine - truth)[inner])
+    b.set_title(f"Error within ±60 deg: {worst_whole:.1f} → {worst_fine:.1f} deg; "
+                "both get worse toward the sides", fontsize=11)
+    fig.suptitle("Two mics, 4.2 cm apart, 48 kHz, noise 20 dB below the sound", fontsize=8,
+                 color="grey", y=0.995)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
