@@ -40,12 +40,9 @@ Volatile state (stage, blockers, next, decisions) is `docs/STATUS.md`.
   in `docs/blog/` is © Aaron. BirdNET, if used, is CC BY-NC-SA: hobby use only.
 - Growth: one post per step. Long-form in Chinese on Vocus (方格子); short English
   post + GIF on LinkedIn, linking to Vocus and to the step's git tag (`step-1`, ...).
-- Blog voice (Aaron, 2026-10-24): write every chapter for a 12-year-old. Each idea
-  starts with a metaphor or picture (one metaphor per idea, reused across chapters).
-  Formulas and exact settings go in short "深入一點" notes a child can skip. The
-  opening summary is three points, concepts only: no math, no numbers. Headings
-  state the knowledge point, not a story hook. Figure titles state the point; axis
-  labels say what they mean in plain words.
+- Blog voice: read `docs/blog/STYLE.md` before writing or editing any chapter or
+  figure, and run its checklist before handing a draft to Aaron. In short: written
+  for a 12-year-old, a metaphor first, fixed terms, math only in "深入一點" notes.
 - Ship: `main` is public on GitHub. Never commit audio, video or `.env*` files.
 
 ## Gotchas (learned the hard way)

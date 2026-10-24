@@ -1,14 +1,15 @@
 # Status
 
-Updated: 2026-10-23
+Updated: 2026-10-24
 
 ## Stage
 Step 1 code done: two simulated mics find the angle (GCC-PHAT), 10 tests pass.
-Max error 0.5 deg within +-60 deg; chapter 1 draft in `docs/blog/01-two-mics.md`.
+Max error 0.5 deg within +-60 deg. Chapter 1 reviewed with Aaron, rewritten for a
+12-year-old, 8 figures in Chinese; style rules in `docs/blog/STYLE.md`.
 Path: simulate first (steps 1-3), buy an array after step 2. Each step: post + git tag.
 
 ## In progress
-- Post 1: Aaron edits `docs/blog/01-two-mics.md`, posts on Vocus and LinkedIn.
+- Post 1: Aaron reads the final `docs/blog/01-two-mics.md`, posts on Vocus and LinkedIn.
 
 ## Blockers (needs Aaron)
 - Push to GitHub: auto mode blocks Claude from pushing to the public repo.
@@ -31,6 +32,8 @@ Path: simulate first (steps 1-3), buy an array after step 2. Each step: post + g
 - None.
 
 ## Decisions log
+- 2026-10-24: Blog style guide `docs/blog/STYLE.md`; why: chapter 1 took about 30
+  corrections, the guide turns each into a rule and a checklist. Reverse: delete it.
 - 2026-10-23: Simulate with numpy plane waves, not pyroomacoustics; why: no echoes
   needed yet, no extra install. Reverse: add pyroomacoustics when rooms matter.
 - 2026-10-23: `gcc_phat` takes a `band`; why: a 2-6 kHz whistle read 25.8-36.5 deg at
