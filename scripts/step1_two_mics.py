@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import Arc
 import numpy as np
 from scipy.signal import chirp
 
@@ -41,24 +42,37 @@ def fig_geometry(path):
     mics = np.array([[-D / 2, 0], [D / 2, 0]]) * 100  # cm
     ax.plot(*mics.T, "ko", ms=10)
     for (x, y), name in zip(mics, ["mic 0", "mic 1"]):
-        ax.annotate(name, (x, y), (x, y - 0.8), ha="center")
+        ax.annotate(name, (x, y), (x, y - 0.6), ha="center")
+    # d: the distance between the mics.
+    ax.annotate("", mics[1] + [0, -1.1], mics[0] + [0, -1.1], arrowprops=dict(arrowstyle="<->"))
+    ax.text(0, -1.0, f"d = {D * 100:.1f} cm", ha="center", va="bottom")
     direction = np.array([np.sin(theta), np.cos(theta)])
     ax.annotate("", 3.5 * direction, (0, 0), arrowprops=dict(arrowstyle="->", color="C1", lw=2))
     ax.text(*(3.6 * direction), "to the sound", color="C1")
     ax.plot([0, 0], [0, 3.5], "k:", lw=1)
     ax.text(-0.1, 3.6, "straight ahead (0 deg)", fontsize=8, ha="right")
+    # Angle θ between straight ahead and the sound.
+    ax.add_patch(Arc((0, 0), 5.6, 5.6, theta1=90 - 30, theta2=90, color="C1"))
+    ax.text(0.1, 2.95, "θ = 30°", color="C1", fontsize=9)
     # Wavefront through mic 1, perpendicular to the direction.
     wave = np.array([direction[1], -direction[0]])
     p = mics[1] + np.outer([-4.6, 1], wave)
     ax.plot(p[:, 0], p[:, 1], "C0--", lw=1)
     ax.text(*(p[0] + [-0.2, 0.25]), "wavefront", color="C0", fontsize=8)
+    # The same θ sits between the mic line and the wavefront, at mic 1.
+    ax.add_patch(Arc(mics[1], 2.0, 2.0, theta1=180 - 30, theta2=180, color="C0"))
+    ax.text(mics[1][0] - 1.45, 0.12, "θ", color="C0", fontsize=10)
     foot = mics[1] + wave * np.dot(mics[0] - mics[1], wave)
     ax.plot([mics[0][0], foot[0]], [0, foot[1]], "C3", lw=3)
-    ax.text(-3.9, 0.9, "extra path\n= d sin(angle)", color="C3", fontsize=9)
+    # Right-angle mark where the extra path meets the wavefront.
+    s = 0.2
+    corner = foot - s * direction
+    ax.plot(*np.array([corner, corner + s * wave, foot + s * wave]).T, "k", lw=0.8)
+    ax.text(-3.9, 0.9, "extra path\n= d · sin θ", color="C3", fontsize=9)
     ax.set_title("The sound reaches mic 1 first; mic 0 waits for the extra path")
     ax.set_aspect("equal")
     ax.set_xlim(-4, 4)
-    ax.set_ylim(-1.5, 4.3)
+    ax.set_ylim(-1.6, 4.3)
     ax.set_xlabel("cm")
     ax.set_yticks([])
     fig.tight_layout()
