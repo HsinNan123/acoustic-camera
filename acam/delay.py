@@ -7,8 +7,9 @@ SPEED_OF_SOUND = 343.0  # m/s in air at 20 C
 def gcc_phat(sig, ref, fs, max_tau=None, interp=16, band=None):
     """Delay of `sig` relative to `ref`, in seconds. Positive: `sig` hears it later.
 
-    GCC-PHAT: cross-correlate in the frequency domain, keep only the phase, so the
-    peak is sharp whatever the sound's spectrum. `interp` zero-pads the inverse FFT
+    GCC-PHAT (Generalized Cross-Correlation with Phase Transform): cross-correlate
+    in the frequency domain, keep only the phase, so the peak is sharp whatever the
+    sound's spectrum. `interp` zero-pads the inverse FFT
     to read the peak between samples. `band` (low_hz, high_hz) drops the other
     frequencies: PHAT weights every frequency equally, so bands with only noise
     pull the peak away.
