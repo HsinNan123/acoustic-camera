@@ -111,6 +111,7 @@ New chapters add rows here; they do not invent a second word for an existing row
 - [ ] Every figure: Chinese, point in title, plain axis labels, integer ticks,
       text under it explains each line, checked by eye.
 - [ ] Script rerun; numbers in text match its output; tests pass.
+- [ ] Publish kit `NN-<slug>.vocus.md` is ready; 摘要 counted at 150 characters or fewer.
 
 ## 9. Opening picture with Gemini (every chapter)
 
@@ -147,3 +148,40 @@ Chapter 1 scene: "View from inside a home, looking out a window at a garden tree
 small bird sings on a branch. A colorful heat-map glow is overlaid on the bird, like
 a thermal camera image: red at the center, fading to yellow, green and blue. It shows
 where the sound comes from. On the window sill sits the microphone board."
+
+## 10. Publishing on Vocus
+
+Aaron asked on 2026-10-24: every setting is prepared before publishing, not decided
+on the settings page. Chapter 1's kit is `01-two-mics.vocus.md`; copy its shape.
+
+**Publish kit** (`docs/blog/NN-<slug>.vocus.md`, written with the draft, shown to
+Aaron with it):
+
+| Setting | Rule |
+|---|---|
+| 標題 | Same as the chapter's H1 |
+| 分類 | 科技 (default for this series) |
+| 摘要 | **150 characters at most**, Vocus's hard limit. Concepts only, no math, like the summary. Count it. |
+| 縮圖 | The Gemini picture (first image in the article) |
+| 關鍵字 | 3 to 20. No hyphen (Vocus rejected "GCC-PHAT"). Never a security word (監控, 安防, 監視). Fixed series words: 聲音相機、麥克風陣列、聲源定位、訊號處理、科普、賞鳥, plus the chapter's own |
+| 主題活動 | Only one that fits the post; say its end date |
+| 進階 | 文章目錄 on; 標記含 AI 輔助或生成 on (Gemini picture, Claude draft) |
+| 權限和狀態 | 免費公開, 林信男的沙龍, 公開發佈 |
+
+**Steps** (built-in browser, Aaron's account is signed in; phone verification done):
+
+1. Push the repo first: Vocus copies each image from its public GitHub address.
+2. `python scripts/md_to_vocus.py docs/blog/NN-<slug>.md out/chN_vocus.json`. It drops
+   the H1 and the draft note, points images at GitHub, and joins lines.
+3. vocus.cc → 創作 → 文章 opens a new draft. Type the title into the title box.
+4. Click once into the body (the paste needs a cursor), then paste the HTML with a
+   `ClipboardEvent('paste')` carrying `text/html`. Check: headings, images all on
+   `images.vocus.cc`, notes, tables, links.
+5. 準備發佈 → fill the three pages from the kit. Watch for traps:
+   - The summary box is pre-filled: select all, delete, then type.
+   - The keyword box is pre-filled with auto words: remove them all.
+   - A theme tag opens a dialog; confirm with 確定投稿.
+6. Stop before 確認發佈 and show Aaron the kit and the draft, unless his request
+   already said to publish with this kit.
+7. After publishing, open the article URL and check: 9-ish headings, no broken
+   image, no draft note. Write the URL into the kit file and `docs/STATUS.md`.

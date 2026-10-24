@@ -9,13 +9,14 @@ Max error 0.5 deg within +-60 deg. Chapter 1 reviewed with Aaron, rewritten for 
 Path: simulate first (steps 1-3), buy an array after step 2. Each step: post + git tag.
 
 ## In progress
-- Post 1: Aaron reads the final `docs/blog/01-two-mics.md`, posts on Vocus and LinkedIn.
+- Post 1 is live on Vocus (2026-10-24): https://vocus.cc/article/6adcc21cfd89780001a98cf2.
+  LinkedIn short post not done.
 
 ## Blockers (needs Aaron)
 - None.
 
 ## Next (in order)
-1. Post 1 on Vocus (Chinese) + LinkedIn (English, `step1_sweep.png`). · Hours: 1
+1. Post 1 on LinkedIn (English, short, links to Vocus and tag `step-1`). · Hours: 0.5
 2. Step 2: delay-and-sum beamformer, 2D power map. Simulate the UMA-16 4x4 grid and the
    Sipeed 6-mic circle side by side. Pass: peak within 3 deg at 1, 2, 4 kHz. Post 2:
    "Which array to buy, decided by simulation". · Hours: 3
