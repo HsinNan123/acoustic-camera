@@ -252,7 +252,8 @@ def fig_sweep(path, truth, whole, fine):
     b.plot(truth, np.abs(fine - truth), "-", label=fine_label)
     b.text(0, 19, "灰色：左右 60 度以內", ha="center", fontsize=8, color="grey")
     b.set_xlabel("聲音真正的角度（模擬時設定，度）")
-    b.set_ylabel("答錯幾度")
+    b.set_ylabel("答錯幾度（越低越準）")
+    b.set_yticks(range(0, 21, 5))
     b.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, 0.84))
     inner = np.abs(truth) <= 60
     worst_whole = np.max(np.abs(whole - truth)[inner])
