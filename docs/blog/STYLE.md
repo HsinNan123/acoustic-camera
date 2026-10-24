@@ -17,8 +17,8 @@ Run the checklist at the end before handing a draft to Aaron.
 3. **重點摘要：3 points.** Concepts only: no formula, no number, no technical term
    that the chapter has not explained yet. Each point is one idea, not two.
 4. Hook: why this step matters for finding the bird, in two to three lines.
-5. A concept picture when the idea is new (AI-made is fine; caption says
-   `AI 生成，Gemini`).
+5. A concept picture made with Gemini, right after the hook. Every chapter has one.
+   How to make it: section 9.
 6. Numbered sections. Last section: what this method cannot do, which leads to the
    next chapter. Then a 程式碼 section with links.
 
@@ -101,6 +101,7 @@ New chapters add rows here; they do not invent a second word for an existing row
 
 ## 8. Checklist before handing a draft to Aaron
 
+- [ ] Opening concept picture from Gemini is in place, captioned `AI 生成，Gemini`.
 - [ ] Summary: 3 points, no math, no numbers, one idea each.
 - [ ] Every heading: one knowledge point, child's words, no hook, no formula.
 - [ ] Every section opens with a metaphor from the table, or adds a new row.
@@ -110,3 +111,39 @@ New chapters add rows here; they do not invent a second word for an existing row
 - [ ] Every figure: Chinese, point in title, plain axis labels, integer ticks,
       text under it explains each line, checked by eye.
 - [ ] Script rerun; numbers in text match its output; tests pass.
+
+## 9. Opening picture with Gemini (every chapter)
+
+Aaron asked for this on 2026-10-24. Claude makes it; Aaron does not need to.
+
+1. **Browser**: the built-in browser of the Claude desktop app (the session's
+   default browser), at `https://gemini.google.com/app`. Aaron's Google account is
+   already signed in there. If a sign-in page shows, stop and ask Aaron to sign in.
+2. **Prompt**: start with `Create an image:`, then the shared style, then this
+   chapter's scene. Keep the shared style word for word so every chapter looks like
+   one series:
+
+   ```
+   A friendly flat-vector illustration for a children's science blog. Soft daylight,
+   clean and simple, no text, 16:9. Recurring characters: a small brown songbird with
+   an orange chest; a square green circuit board with 16 tiny microphones in a 4x4
+   grid and a small camera in the middle; a home window looking out at a garden tree.
+   Scene: <one or two sentences showing this chapter's main idea>
+   ```
+
+   No text in the image: Gemini writes Chinese wrongly. Labels go in the caption.
+3. **Check** the result before saving: it shows the chapter's idea, no text, no
+   real brand or person. If not, ask Gemini for one new version, saying what to fix.
+4. **Download**: ask Aaron in one line first (file, source, size), as every download
+   needs his OK. Then use Gemini's "Download full size image" button; the file lands
+   in `C:\Users\Aaron\Downloads`.
+5. **Save** as `docs/blog/img/stepN_concept.jpg`, resized to 1600 px wide, JPEG
+   quality 85 (about 120 KB). Leave the original in Downloads.
+6. **Caption** under the image: what to notice, then `（AI 生成，Gemini）`.
+7. **Record** the scene sentence in the commit message, so the picture can be made
+   again.
+
+Chapter 1 scene: "View from inside a home, looking out a window at a garden tree. A
+small bird sings on a branch. A colorful heat-map glow is overlaid on the bird, like
+a thermal camera image: red at the center, fading to yellow, green and blue. It shows
+where the sound comes from. On the window sill sits the microphone board."
