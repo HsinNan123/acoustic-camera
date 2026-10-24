@@ -180,20 +180,24 @@ def rms(errors):
 
 
 def fig_noise(path, snrs, hit_short, hit_long):
-    fig, ax = plt.subplots(figsize=(6, 3.5))
-    ax.plot(snrs, hit_short, "o-", label="listen 0.1 s")
-    ax.plot(snrs, hit_long, "s-", label="listen 0.4 s")
+    fig, ax = plt.subplots(figsize=(6, 4))
+    ax.plot(snrs, hit_short, "o-", label="listen for 0.1 s")
+    ax.plot(snrs, hit_long, "s-", label="listen for 0.4 s (4x longer)")
     ax.axvline(0, color="grey", ls=":", lw=0.8)
-    ax.text(0.5, 8, "sound = noise", color="grey", fontsize=8)
+    ax.text(0.5, 76, "← sound and noise\n    equally loud", color="grey", fontsize=8)
     ax.text(5, 50, "quiet:\nsound louder\nthan noise", ha="center", fontsize=8, color="grey")
     ax.text(-18.5, 72, "noisy:\nnoise louder\nthan sound", ha="center", fontsize=8, color="grey")
-    ax.annotate("the cliff", (-12.5, 50), (-7.5, 30), fontsize=8,
+    ax.annotate("the cliff:\naccuracy drops fast", (-12.5, 50), (-8, 25), fontsize=8,
                 arrowprops=dict(arrowstyle="->", color="grey"))
     ax.set_xlabel("signal-to-noise ratio (dB)   ← noisier          quieter →")
-    ax.set_ylabel("right answers out of 200 (%)\n(within 2 deg)")
+    ax.set_ylabel("accuracy (%)\nright = within 2 deg of the truth")
+    top = ax.secondary_xaxis("top")
+    top.set_xticks([-20, -15, -10, -5, 0])
+    top.set_xticklabels(["100x", "32x", "10x", "3x", "1x"], fontsize=8)
+    top.set_xlabel("noise is N times the sound (power)", fontsize=8)
     ax.set_title("Too noisy: the answer falls off a cliff. Listening longer helps", fontsize=11)
     ax.set_ylim(0, 105)
-    ax.legend(fontsize=8)
+    ax.legend(fontsize=8, loc="lower right")
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
