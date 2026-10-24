@@ -1,6 +1,6 @@
 """Step 1: two simulated mics find the angle of a sound.
 
-Writes four figures to docs/blog/img/ and prints the numbers used in the blog post.
+Writes five figures to docs/blog/img/ and prints the numbers used in the blog post.
 Run from the project folder: .venv\\Scripts\\python scripts\\step1_two_mics.py
 """
 import sys
@@ -80,6 +80,55 @@ def fig_geometry(path):
     ax.set_ylim(-1.6, 4.3)
     ax.set_xlabel("左右位置（公分），0 = 兩支麥克風的正中間")
     ax.set_ylabel("往前（公分）")
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+
+
+def fig_ruler(path, true_deg=36):
+    """Section 2: counting whole sound photos is a ruler with only big marks."""
+    dt_us = 1e6 / FS
+    tau_us = D * np.sin(np.radians(true_deg)) / SPEED_OF_SOUND * 1e6
+    k = round(tau_us / dt_us)
+    snap_deg = angle_from_delay(k / FS, D)
+    fig, (a, b) = plt.subplots(2, 1, figsize=(6, 6.3), gridspec_kw=dict(height_ratios=[1, 2.4]))
+
+    # Top: the delay against the sound-photo marks.
+    for i in range(7):
+        a.plot([i * dt_us] * 2, [0, 1], "k", lw=1)
+        a.text(i * dt_us, -0.25, f"第 {i} 張", ha="center", va="top", fontsize=8)
+    a.barh(0.5, tau_us, height=0.3, color="C3")
+    a.text(tau_us / 2, 0.5, f"真正的時間差 {tau_us:.0f} 微秒", ha="center", va="center", color="white",
+           fontsize=9)
+    a.annotate(f"只數照片：「大約 {k} 張」", (k * dt_us, 1.0), (k * dt_us + 18, 1.35), fontsize=9,
+               arrowprops=dict(arrowstyle="->"))
+    a.set_xlim(-8, 6.5 * dt_us)
+    a.set_ylim(-0.6, 1.6)
+    a.axis("off")
+    a.set_title(f"聲音照片每 {dt_us:.1f} 微秒一張：時間差落在第 {k} 和第 {k + 1} 張之間", fontsize=10)
+
+    # Bottom: the only directions whole photos can give.
+    for kk in range(-6, 7):
+        ang = np.radians(angle_from_delay(kk / FS, D))
+        end = np.array([np.sin(ang), np.cos(ang)])
+        picked = kk == k
+        b.plot([0, end[0]], [0, end[1]], color="C3" if picked else "C0", lw=2.5 if picked else 1)
+        b.text(*(1.1 * end), f"{np.degrees(ang):.0f}°", ha="center", va="center", fontsize=7,
+               color="C3" if picked else "C0")
+    bird = np.array([np.sin(np.radians(true_deg)), np.cos(np.radians(true_deg))])
+    b.plot([0, 0.9 * bird[0]], [0, 0.9 * bird[1]], "C1--", lw=2)
+    b.plot(*(0.9 * bird), "o", color="C1", ms=9)
+    b.annotate(f"鳥在 {true_deg} 度", 0.9 * bird, (0.72, 1.12), color="C1", fontsize=9,
+               arrowprops=dict(arrowstyle="->", color="C1"))
+    snap_dir = np.array([np.sin(np.radians(snap_deg)), np.cos(np.radians(snap_deg))])
+    b.annotate(f"麥克風只能回答 {snap_deg:.0f} 度", 0.45 * snap_dir, (0.62, 0.18), color="C3",
+               fontsize=9, arrowprops=dict(arrowstyle="->", color="C3"))
+    b.plot([-0.05, 0.05], [0, 0], "ko", ms=6)
+    b.text(0, -0.08, "兩支麥克風", ha="center", va="top", fontsize=8)
+    b.set_aspect("equal")
+    b.set_xlim(-1.25, 1.25)
+    b.set_ylim(-0.2, 1.2)
+    b.axis("off")
+    b.set_title("只數照片：方向只能從這 13 條線裡選一條", fontsize=10)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
@@ -214,6 +263,7 @@ def main():
     inner = np.abs(truth) <= 60
 
     fig_geometry(OUT / "step1_geometry.png")
+    fig_ruler(OUT / "step1_ruler.png")
     fig_correlation(OUT / "step1_correlation.png")
     fig_sweep(OUT / "step1_sweep.png", truth, whole, fine)
 
