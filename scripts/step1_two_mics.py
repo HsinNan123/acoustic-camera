@@ -9,7 +9,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.patches import Arc
 import numpy as np
-from scipy.signal import chirp
+from scipy.signal import chirp, resample
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from acam.delay import SPEED_OF_SOUND, angle_from_delay, gcc_phat  # noqa: E402
@@ -82,19 +82,48 @@ def fig_geometry(path):
 def fig_correlation(path):
     mic0, mic1 = two_mic_plane_wave(noise_burst(), FS, 30, D, snr_db=20, seed=1)
     true_us = D * np.sin(np.radians(30)) / SPEED_OF_SOUND * 1e6
-    fig, ax = plt.subplots(figsize=(6, 3.5))
-    for interp, style in [(1, "o-"), (16, "-")]:
+    fig, (top, ax) = plt.subplots(2, 1, figsize=(6, 6.5))
+
+    # Top: the sound each mic hears. Dots are the real samples; the line between
+    # them is the smooth wave they come from (16x resampled).
+    start, length = 1000, 24
+    t_us = np.arange(length) / FS * 1e6
+    t_fine = np.arange(length * 16) / (16 * FS) * 1e6
+    for sig, name, color in [(mic1, "mic 1 (hears it first)", "C2"), (mic0, "mic 0", "C3")]:
+        fine = resample(sig, len(sig) * 16)[start * 16 : (start + length) * 16]
+        top.plot(t_fine, fine, "-", color=color, lw=1.2, label=name)
+        top.plot(t_us, sig[start : start + length], "o", color=color, ms=3)
+    # Arrow from mic 1's highest peak to the same peak in mic 0.
+    fine1 = resample(mic1, len(mic1) * 16)[start * 16 : (start + length) * 16]
+    peak_t, peak_y = t_fine[np.argmax(fine1)], fine1.max()
+    for t in (peak_t, peak_t + true_us):
+        top.axvline(t, color="grey", ls=":", lw=0.8)
+    top.annotate("", (peak_t + true_us, peak_y + 0.4), (peak_t, peak_y + 0.4),
+                 arrowprops=dict(arrowstyle="->"))
+    top.text(peak_t + true_us / 2, peak_y + 0.55, f"same peak, {true_us:.0f} us later",
+             ha="center", fontsize=8)
+    top.set_xlabel("time (microseconds); dots = samples, 20.8 us apart")
+    top.set_ylabel("sound level")
+    top.set_title("What the mics hear: mic 0 gets the same wave, later")
+    top.set_ylim(top.get_ylim()[0], 3.4)
+    top.legend(fontsize=8, loc="upper left")
+
+    # Bottom: the GCC-PHAT score for each trial delay.
+    for interp, style, label in [
+        (1, "o-", "score every 20.8 us (whole samples)"),
+        (16, "-", "score every 1.3 us (16x finer)"),
+    ]:
         n = len(mic0) * 2
         cross = np.fft.rfft(mic0, n) * np.conj(np.fft.rfft(mic1, n))
         cc = np.fft.irfft(cross / (np.abs(cross) + 1e-12), n * interp)
         k = 8 * interp
         cc = np.concatenate((cc[-k:], cc[: k + 1])) * interp
         lags_us = np.arange(-k, k + 1) / (interp * FS) * 1e6
-        ax.plot(lags_us, cc, style, label=f"{'whole samples' if interp == 1 else '16x finer'}")
+        ax.plot(lags_us, cc, style, label=label)
     ax.axvline(true_us, color="k", ls=":", label=f"true delay {true_us:.0f} us")
-    ax.set_xlabel("delay of mic 0 after mic 1 (microseconds)")
+    ax.set_xlabel("trial delay of mic 0 after mic 1 (microseconds)")
     ax.set_ylabel("GCC-PHAT score")
-    ax.set_title("The peak marks the delay")
+    ax.set_title("GCC-PHAT score vs. delay: the peak marks the delay")
     ax.legend(fontsize=8)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
