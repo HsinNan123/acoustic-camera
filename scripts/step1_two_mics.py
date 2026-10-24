@@ -1,6 +1,6 @@
 """Step 1: two simulated mics find the angle of a sound.
 
-Writes three figures to docs/blog/img/ and prints the numbers used in the blog post.
+Writes four figures to docs/blog/img/ and prints the numbers used in the blog post.
 Run from the project folder: .venv\\Scripts\\python scripts\\step1_two_mics.py
 """
 import sys
@@ -9,7 +9,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.patches import Arc
 import numpy as np
-from scipy.signal import chirp, resample
+from scipy.signal import butter, chirp, resample, sosfiltfilt
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from acam.delay import SPEED_OF_SOUND, angle_from_delay, gcc_phat  # noqa: E402
@@ -146,6 +146,42 @@ def fig_sweep(path, truth, whole, fine):
     fig.savefig(path, dpi=150)
 
 
+def angle_errors(snr_db, seconds, fs=FS, runs=200, bird_band=False):
+    """Angle errors (deg) for a source at 30 deg over `runs` random sounds and noises.
+
+    `bird_band`: the sound and the GCC-PHAT score keep only 2-8 kHz.
+    """
+    sos = butter(6, [2000, 8000], btype="band", fs=fs, output="sos")
+    errors = []
+    for s in range(runs):
+        src = np.random.default_rng(1000 + s).standard_normal(int(fs * seconds))
+        if bird_band:
+            src = sosfiltfilt(sos, src)
+        mic0, mic1 = two_mic_plane_wave(src, fs, 30, D, snr_db=snr_db, seed=s)
+        band = (2000, 8000) if bird_band else None
+        errors.append(angle_from_delay(gcc_phat(mic0, mic1, fs, max_tau=MAX_TAU, band=band), D) - 30)
+    return np.array(errors)
+
+
+def rms(errors):
+    return np.sqrt(np.mean(errors**2))
+
+
+def fig_noise(path, snrs, hit_short, hit_long):
+    fig, ax = plt.subplots(figsize=(6, 3.5))
+    ax.plot(snrs, hit_short, "o-", label="listen 0.1 s")
+    ax.plot(snrs, hit_long, "s-", label="listen 0.4 s")
+    ax.axvline(0, color="grey", ls=":", lw=0.8)
+    ax.text(0.5, 8, "sound = noise", color="grey", fontsize=8)
+    ax.set_xlabel("signal-to-noise ratio (dB); left = noise louder than the sound")
+    ax.set_ylabel("runs within 2 deg (%)")
+    ax.set_title("Below a noise level the answer falls apart; listening longer helps")
+    ax.set_ylim(0, 105)
+    ax.legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     truth = np.arange(-85, 86, 1)
@@ -168,6 +204,27 @@ def main():
         band = estimate(bird_whistle(), 30, 16, seed=seed, band=(2000, 6000))
         print(f"Bird whistle at 30 deg, noise seed {seed}: all frequencies {full:.1f} deg, "
               f"2-6 kHz only {band:.1f} deg")
+
+    # Noise and listening time: source at 30 deg, 200 runs per point.
+    snrs = np.arange(10, -22.5, -2.5)
+    short = [angle_errors(s, 0.1) for s in snrs]
+    long = [angle_errors(s, 0.4) for s in snrs]
+    fig_noise(OUT / "step1_noise.png", snrs,
+              [np.mean(np.abs(e) < 2) * 100 for e in short],
+              [np.mean(np.abs(e) < 2) * 100 for e in long])
+    for s, e1, e4 in zip(snrs, short, long):
+        print(f"SNR {s:6.1f} dB: RMS error 0.1 s {rms(e1):5.2f} deg, 0.4 s {rms(e4):5.2f} deg; "
+              f"within 2 deg {np.mean(np.abs(e1) < 2) * 100:3.0f}% / {np.mean(np.abs(e4) < 2) * 100:3.0f}%")
+
+    # Sample rate, fair test: 2-8 kHz sound, same noise per Hz (96 kHz total SNR 3 dB lower).
+    for snr in [0, -5]:
+        e48 = rms(angle_errors(snr, 0.1, bird_band=True))
+        e96 = rms(angle_errors(snr - 3, 0.1, fs=96_000, bird_band=True))
+        print(f"2-8 kHz sound, SNR {snr} dB at 48 kHz, same noise per Hz at 96 kHz: "
+              f"48 kHz {e48:.2f} deg, 96 kHz {e96:.2f} deg")
+
+    for metres in [10, 50]:
+        print(f"0.5 deg at {metres} m = {np.tan(np.radians(0.5)) * metres * 100:.0f} cm")
 
 
 if __name__ == "__main__":
