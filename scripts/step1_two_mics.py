@@ -210,12 +210,12 @@ def fig_frequencies(path):
 
 
 def fig_votes(path):
-    """Section 3: the full GCC-PHAT vote, counted at photos and between them."""
+    """Section 3: the full GCC-PHAT vote, for guesses of whole photos and in between."""
     mic0, mic1, true_us = thirty_degree_signals()
-    fig, ax = plt.subplots(figsize=(6, 3.6))
+    fig, ax = plt.subplots(figsize=(6, 4))
     for interp, style, label in [
-        (1, "o-", "只在每張照片計票（每 20.8 微秒）"),
-        (16, "-", "照片之間補畫後計票（每 1.3 微秒）"),
+        (1, "o-", "只猜整數張照片：晚 0、1、2、3… 張"),
+        (16, "-", "也猜照片之間：例如晚 2.9 張"),
     ]:
         n = len(mic0) * 2
         cross = np.fft.rfft(mic0, n) * np.conj(np.fft.rfft(mic1, n))
@@ -225,10 +225,14 @@ def fig_votes(path):
         lags_us = np.arange(-k, k + 1) / (interp * FS) * 1e6
         ax.plot(lags_us, cc, style, label=label)
     ax.axvline(true_us, color="k", ls=":", label=f"真正的時間差 {true_us:.0f} 微秒")
-    ax.set_xlabel("猜的時間差：mic 0 比 mic 1 晚多少（微秒）")
+    ax.set_xlabel("猜：mic 0 比 mic 1 晚多少（微秒）")
     ax.set_ylabel("票數（GCC-PHAT 分數）")
-    ax.set_title("所有評審一起投票：票數最高的地方，就是時間差")
-    ax.legend(fontsize=8)
+    photos = ax.secondary_xaxis("top", functions=(lambda us: us * FS / 1e6, lambda p: p * 1e6 / FS))
+    photos.set_xticks(range(-8, 9))
+    photos.tick_params(labelsize=7)
+    photos.set_xlabel("猜：晚幾張照片", fontsize=8)
+    ax.set_title("所有評審一起投票：票數最高的猜法，就是時間差", fontsize=11)
+    ax.legend(fontsize=8, loc="upper left")
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
