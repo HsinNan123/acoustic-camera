@@ -99,7 +99,7 @@ def fig_ruler(path, true_deg=36):
     a.barh(0.5, tau_us, height=0.3, color="C3")
     a.text(tau_us / 2, 0.5, f"真正的時間差 {tau_us:.0f} 微秒", ha="center", va="center", color="white",
            fontsize=9)
-    a.annotate(f"只數照片：「大約 {k} 張」", (k * dt_us, 1.0), (k * dt_us + 18, 1.35), fontsize=9,
+    a.annotate(f"只猜整數張照片：「大約晚 {k} 張」", (k * dt_us, 1.0), (k * dt_us + 18, 1.35), fontsize=9,
                arrowprops=dict(arrowstyle="->"))
     a.set_xlim(-8, 6.5 * dt_us)
     a.set_ylim(-0.6, 1.6)
@@ -128,7 +128,7 @@ def fig_ruler(path, true_deg=36):
     b.set_xlim(-1.25, 1.25)
     b.set_ylim(-0.2, 1.2)
     b.axis("off")
-    b.set_title("只數照片：方向只能從這 13 條線裡選一條", fontsize=10)
+    b.set_title("只猜整數張照片：方向只能從這 13 條線裡選一條", fontsize=10)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
@@ -239,13 +239,13 @@ def fig_votes(path):
 
 def fig_sweep(path, truth, whole, fine):
     fig, (a, b) = plt.subplots(2, 1, figsize=(6, 7), sharex=True)
-    whole_label, fine_label = "只數照片（每 20.8 微秒）", "照片之間補畫（每 1.3 微秒）"
+    whole_label, fine_label = "只猜整數張照片（每 20.8 微秒一個猜法）", "也猜照片之間（每 1.3 微秒一個猜法）"
     a.plot(truth, truth, "k:", label="正確答案")
     a.plot(truth, whole, "o-", ms=3, label=whole_label)
     a.plot(truth, fine, "-", label=fine_label)
     a.set_ylabel("麥克風回答的角度（度）")
     a.legend(fontsize=8)
-    a.set_title("只數照片：答案只有 13 種（樓梯）\n照片之間補畫：貼著正確答案", fontsize=11)
+    a.set_title("只猜整數張照片：答案只有 13 種（樓梯）\n也猜照片之間：貼著正確答案", fontsize=11)
     for ax in (a, b):
         ax.axvspan(-60, 60, color="grey", alpha=0.08)
     b.plot(truth, np.abs(whole - truth), "o-", ms=3, label=whole_label)
