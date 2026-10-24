@@ -12,7 +12,7 @@ Path: simulate first (steps 1-3), buy an array after step 2. Each step: post + g
 - Post 1: Aaron reads the final `docs/blog/01-two-mics.md`, posts on Vocus and LinkedIn.
 
 ## Blockers (needs Aaron)
-- Push to GitHub: auto mode blocks Claude from pushing to the public repo.
+- None.
 
 ## Next (in order)
 1. Post 1 on Vocus (Chinese) + LinkedIn (English, `step1_sweep.png`). · Hours: 1
