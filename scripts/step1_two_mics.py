@@ -20,6 +20,10 @@ D = 0.042  # UMA-16 mic spacing, metres
 MAX_TAU = D / SPEED_OF_SOUND
 OUT = Path(__file__).resolve().parents[1] / "docs" / "blog" / "img"
 
+# Figures are in Traditional Chinese for the blog.
+plt.rcParams["font.family"] = ["Microsoft JhengHei", "Noto Sans TC"]
+plt.rcParams["axes.unicode_minus"] = False
+
 
 def noise_burst(n=4800, seed=0):
     return np.random.default_rng(seed).standard_normal(n)
@@ -45,12 +49,13 @@ def fig_geometry(path):
         ax.annotate(name, (x, y), (x, y - 0.6), ha="center")
     # d: the distance between the mics.
     ax.annotate("", mics[1] + [0, -1.1], mics[0] + [0, -1.1], arrowprops=dict(arrowstyle="<->"))
-    ax.text(0, -1.0, f"d = {D * 100:.1f} cm", ha="center", va="bottom")
+    ax.text(0, -1.0, f"d = {D * 100:.1f} 公分（兩支麥克風的距離）", ha="center", va="bottom",
+            fontsize=9)
     direction = np.array([np.sin(theta), np.cos(theta)])
     ax.annotate("", 3.5 * direction, (0, 0), arrowprops=dict(arrowstyle="->", color="C1", lw=2))
-    ax.text(*(3.6 * direction), "to the sound", color="C1")
+    ax.text(*(3.6 * direction), "聲音從這裡來", color="C1")
     ax.plot([0, 0], [0, 3.5], "k:", lw=1)
-    ax.text(-0.1, 3.6, "straight ahead (0 deg)", fontsize=8, ha="right")
+    ax.text(-0.1, 3.6, "正前方（0 度）", fontsize=8, ha="right")
     # Angle θ between straight ahead and the sound.
     ax.add_patch(Arc((0, 0), 5.6, 5.6, theta1=90 - 30, theta2=90, color="C1"))
     ax.text(0.1, 2.95, "θ = 30°", color="C1", fontsize=9)
@@ -58,7 +63,7 @@ def fig_geometry(path):
     wave = np.array([direction[1], -direction[0]])
     p = mics[1] + np.outer([-4.6, 1], wave)
     ax.plot(p[:, 0], p[:, 1], "C0--", lw=1)
-    ax.text(*(p[0] + [-0.2, 0.25]), "wavefront", color="C0", fontsize=8)
+    ax.text(*(p[0] + [-0.2, 0.25]), "浪頭（波前）", color="C0", fontsize=8)
     # The same θ sits between the mic line and the wavefront, at mic 1.
     ax.add_patch(Arc(mics[1], 2.0, 2.0, theta1=180 - 30, theta2=180, color="C0"))
     ax.text(mics[1][0] - 1.45, 0.12, "θ", color="C0", fontsize=10)
@@ -68,13 +73,13 @@ def fig_geometry(path):
     s = 0.2
     corner = foot - s * direction
     ax.plot(*np.array([corner, corner + s * wave, foot + s * wave]).T, "k", lw=0.8)
-    ax.text(-3.9, 0.9, "extra path\n= d · sin θ", color="C3", fontsize=9)
-    ax.set_title("Mic 0 hears the sound later, by the extra path d · sin θ")
+    ax.text(-3.9, 0.9, "多走的路\n= d · sin θ", color="C3", fontsize=9)
+    ax.set_title("浪頭先碰到 mic 1；mic 0 要多走一段路，晚一點才聽到")
     ax.set_aspect("equal")
     ax.set_xlim(-4, 4)
     ax.set_ylim(-1.6, 4.3)
-    ax.set_xlabel("left-right position along the mic line (cm), 0 = middle of the two mics")
-    ax.set_ylabel("toward the front (cm)")
+    ax.set_xlabel("左右位置（公分），0 = 兩支麥克風的正中間")
+    ax.set_ylabel("往前（公分）")
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
@@ -89,7 +94,7 @@ def fig_correlation(path):
     start, length = 1000, 24
     t_us = np.arange(length) / FS * 1e6
     t_fine = np.arange(length * 16) / (16 * FS) * 1e6
-    for sig, name, color in [(mic1, "mic 1 (hears it first)", "C2"), (mic0, "mic 0", "C3")]:
+    for sig, name, color in [(mic1, "mic 1（先聽到）", "C2"), (mic0, "mic 0", "C3")]:
         fine = resample(sig, len(sig) * 16)[start * 16 : (start + length) * 16]
         top.plot(t_fine, fine, "-", color=color, lw=1.2, label=name)
         top.plot(t_us, sig[start : start + length], "o", color=color, ms=3)
@@ -100,18 +105,18 @@ def fig_correlation(path):
         top.axvline(t, color="grey", ls=":", lw=0.8)
     top.annotate("", (peak_t + true_us, peak_y + 0.4), (peak_t, peak_y + 0.4),
                  arrowprops=dict(arrowstyle="->"))
-    top.text(peak_t + true_us / 2, peak_y + 0.55, f"same peak, {true_us:.0f} us later",
+    top.text(peak_t + true_us / 2, peak_y + 0.55, f"同一個波峰，晚 {true_us:.0f} 微秒",
              ha="center", fontsize=8)
-    top.set_xlabel("time (microseconds); dots = samples, 20.8 us apart")
-    top.set_ylabel("sound level")
-    top.set_title("What the mics hear: mic 0 gets the same wave, later")
+    top.set_xlabel("時間（微秒）；點 = 聲音照片，每 20.8 微秒一張")
+    top.set_ylabel("聲音大小")
+    top.set_title("兩支麥克風聽到的聲音：一模一樣，只是 mic 0 晚一點")
     top.set_ylim(top.get_ylim()[0], 3.4)
     top.legend(fontsize=8, loc="upper left")
 
     # Bottom: the GCC-PHAT score for each trial delay.
     for interp, style, label in [
-        (1, "o-", "score every 20.8 us (whole samples)"),
-        (16, "-", "score every 1.3 us (16x finer)"),
+        (1, "o-", "只在每張照片計票（每 20.8 微秒）"),
+        (16, "-", "照片之間補畫後計票（每 1.3 微秒）"),
     ]:
         n = len(mic0) * 2
         cross = np.fft.rfft(mic0, n) * np.conj(np.fft.rfft(mic1, n))
@@ -120,10 +125,10 @@ def fig_correlation(path):
         cc = np.concatenate((cc[-k:], cc[: k + 1])) * interp
         lags_us = np.arange(-k, k + 1) / (interp * FS) * 1e6
         ax.plot(lags_us, cc, style, label=label)
-    ax.axvline(true_us, color="k", ls=":", label=f"true delay {true_us:.0f} us")
-    ax.set_xlabel("trial delay of mic 0 after mic 1 (microseconds)")
-    ax.set_ylabel("GCC-PHAT score")
-    ax.set_title("GCC-PHAT score vs. delay: the peak marks the delay")
+    ax.axvline(true_us, color="k", ls=":", label=f"真正的時間差 {true_us:.0f} 微秒")
+    ax.set_xlabel("猜的時間差：mic 0 比 mic 1 晚多少（微秒）")
+    ax.set_ylabel("票數（GCC-PHAT 分數）")
+    ax.set_title("評審投票：票數最高的地方，就是時間差")
     ax.legend(fontsize=8)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
@@ -131,29 +136,28 @@ def fig_correlation(path):
 
 def fig_sweep(path, truth, whole, fine):
     fig, (a, b) = plt.subplots(2, 1, figsize=(6, 7), sharex=True)
-    whole_label, fine_label = "delay every 20.8 us (whole samples)", "delay every 1.3 us (16x finer)"
-    a.plot(truth, truth, "k:", label="perfect answer")
+    whole_label, fine_label = "只數照片（每 20.8 微秒）", "照片之間補畫（每 1.3 微秒）"
+    a.plot(truth, truth, "k:", label="正確答案")
     a.plot(truth, whole, "o-", ms=3, label=whole_label)
     a.plot(truth, fine, "-", label=fine_label)
-    a.set_ylabel("angle the mics report (deg)")
+    a.set_ylabel("麥克風回答的角度（度）")
     a.legend(fontsize=8)
-    a.set_title("Whole samples allow only 13 answers (the steps);\n16x finer follows the true angle",
-                fontsize=11)
+    a.set_title("只數照片：答案只有 13 種（樓梯）\n照片之間補畫：貼著正確答案", fontsize=11)
     for ax in (a, b):
         ax.axvspan(-60, 60, color="grey", alpha=0.08)
     b.plot(truth, np.abs(whole - truth), "o-", ms=3, label=whole_label)
     b.plot(truth, np.abs(fine - truth), "-", label=fine_label)
-    b.text(0, 19, "within ±60 deg (grey)", ha="center", fontsize=8, color="grey")
-    b.set_xlabel("true angle of the sound, set in the simulation (deg)")
-    b.set_ylabel("error (deg)")
+    b.text(0, 19, "灰色：左右 60 度以內", ha="center", fontsize=8, color="grey")
+    b.set_xlabel("聲音真正的角度（模擬時設定，度）")
+    b.set_ylabel("答錯幾度")
     b.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, 0.84))
     inner = np.abs(truth) <= 60
     worst_whole = np.max(np.abs(whole - truth)[inner])
     worst_fine = np.max(np.abs(fine - truth)[inner])
-    b.set_title(f"Error within ±60 deg: {worst_whole:.1f} → {worst_fine:.1f} deg; "
-                "both get worse toward the sides", fontsize=11)
-    fig.suptitle("Two mics, 4.2 cm apart, 48 kHz, noise 20 dB below the sound", fontsize=8,
-                 color="grey", y=0.995)
+    b.set_title(f"60 度以內最多答錯：{worst_whole:.1f} → {worst_fine:.1f} 度；越靠側面越不準",
+                fontsize=11)
+    fig.suptitle("兩支麥克風相距 4.2 公分，每秒 48,000 張聲音照片，雜訊比聲音小 100 倍（20 dB）",
+                 fontsize=8, color="grey", y=0.995)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
@@ -181,21 +185,21 @@ def rms(errors):
 
 def fig_noise(path, snrs, hit_short, hit_long):
     fig, ax = plt.subplots(figsize=(6, 4))
-    ax.plot(snrs, hit_short, "o-", label="listen for 0.1 s")
-    ax.plot(snrs, hit_long, "s-", label="listen for 0.4 s (4x longer)")
+    ax.plot(snrs, hit_short, "o-", label="聽 0.1 秒")
+    ax.plot(snrs, hit_long, "s-", label="聽 0.4 秒（4 倍久）")
     ax.axvline(0, color="grey", ls=":", lw=0.8)
-    ax.text(0.5, 76, "← sound and noise\n    equally loud", color="grey", fontsize=8)
-    ax.text(5, 50, "quiet:\nsound louder\nthan noise", ha="center", fontsize=8, color="grey")
-    ax.text(-18.5, 72, "noisy:\nnoise louder\nthan sound", ha="center", fontsize=8, color="grey")
-    ax.annotate("the cliff:\naccuracy drops fast", (-12.5, 50), (-8, 25), fontsize=8,
+    ax.text(0.5, 76, "← 聲音和雜訊\n    一樣大", color="grey", fontsize=8)
+    ax.text(5, 50, "安靜：\n聲音比雜訊大", ha="center", fontsize=8, color="grey")
+    ax.text(-18.5, 72, "吵：\n雜訊比聲音大", ha="center", fontsize=8, color="grey")
+    ax.annotate("斷崖：\n正確率突然掉下去", (-12.5, 50), (-8, 25), fontsize=8,
                 arrowprops=dict(arrowstyle="->", color="grey"))
-    ax.set_xlabel("signal-to-noise ratio (dB)   ← noisier          quieter →")
-    ax.set_ylabel("accuracy (%)\nright = within 2 deg of the truth")
+    ax.set_xlabel("訊雜比（dB）     ← 越吵          越安靜 →")
+    ax.set_ylabel("正確率（%）\n離正確答案 2 度以內才算對")
     top = ax.secondary_xaxis("top")
     top.set_xticks([-20, -15, -10, -5, 0])
-    top.set_xticklabels(["100x", "32x", "10x", "3x", "1x"], fontsize=8)
-    top.set_xlabel("noise is N times the sound (power)", fontsize=8)
-    ax.set_title("Too noisy: the answer falls off a cliff. Listening longer helps", fontsize=11)
+    top.set_xticklabels(["100 倍", "32 倍", "10 倍", "3 倍", "1 倍"], fontsize=8)
+    top.set_xlabel("雜訊是聲音的幾倍（功率）", fontsize=8)
+    ax.set_title("太吵時答案會突然全錯（斷崖）；聽久一點可以撐住", fontsize=11)
     ax.set_ylim(0, 105)
     ax.legend(fontsize=8, loc="lower right")
     fig.tight_layout()
