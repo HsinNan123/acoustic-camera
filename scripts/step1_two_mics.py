@@ -303,7 +303,7 @@ def fig_noise(path, snrs, hit_short, hit_long):
     top.set_xticks([-20, -15, -10, -5, 0])
     top.set_xticklabels(["100 倍", "32 倍", "10 倍", "3 倍", "1 倍"], fontsize=8)
     top.set_xlabel("雜訊是聲音的幾倍（功率）", fontsize=8)
-    ax.set_title("太吵時答案會突然全錯（斷崖）；聽久一點可以撐住", fontsize=11)
+    ax.set_title("太吵時答案會突然全錯（斷崖）；雜訊多時，聽久一點比較好判斷", fontsize=11)
     ax.set_ylim(0, 105)
     ax.legend(fontsize=8, loc="lower right")
     fig.tight_layout()
