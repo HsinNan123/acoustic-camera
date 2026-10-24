@@ -1,6 +1,6 @@
 """Step 1: two simulated mics find the angle of a sound.
 
-Writes five figures to docs/blog/img/ and prints the numbers used in the blog post.
+Writes seven figures to docs/blog/img/ and prints the numbers used in the blog post.
 Run from the project folder: .venv\\Scripts\\python scripts\\step1_two_mics.py
 """
 import sys
@@ -133,13 +133,18 @@ def fig_ruler(path, true_deg=36):
     fig.savefig(path, dpi=150)
 
 
-def fig_correlation(path):
+def thirty_degree_signals():
+    """Both mics hearing a noise burst from 30 deg, 20 dB above the noise."""
     mic0, mic1 = two_mic_plane_wave(noise_burst(), FS, 30, D, snr_db=20, seed=1)
-    true_us = D * np.sin(np.radians(30)) / SPEED_OF_SOUND * 1e6
-    fig, (top, ax) = plt.subplots(2, 1, figsize=(6, 6.5))
+    return mic0, mic1, D * np.sin(np.radians(30)) / SPEED_OF_SOUND * 1e6
 
-    # Top: the sound each mic hears. Dots are the real samples; the line between
-    # them is the smooth wave they come from (16x resampled).
+
+def fig_waveform(path):
+    """Section 2: the sound photos, and the same wave arriving later at mic 0."""
+    mic0, mic1, true_us = thirty_degree_signals()
+    fig, top = plt.subplots(figsize=(6, 3.4))
+    # Dots are the real samples; the line between them is the smooth wave they
+    # come from (16x resampled).
     start, length = 1000, 24
     t_us = np.arange(length) / FS * 1e6
     t_fine = np.arange(length * 16) / (16 * FS) * 1e6
@@ -161,8 +166,53 @@ def fig_correlation(path):
     top.set_title("兩支麥克風聽到的聲音：一模一樣，只是 mic 0 晚一點")
     top.set_ylim(top.get_ylim()[0], 3.4)
     top.legend(fontsize=8, loc="upper left")
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
 
-    # Bottom: the GCC-PHAT score for each trial delay.
+
+def fig_frequencies(path):
+    """Section 3: a sound is several pitches; each pitch votes, only the truth gets all votes."""
+    true_us = D * np.sin(np.radians(30)) / SPEED_OF_SOUND * 1e6
+    pitches = [(2000, "低音 2 kHz", "C0"), (5000, "中音 5 kHz", "C2"), (11000, "高音 11 kHz", "C4")]
+    fig, (top, ax) = plt.subplots(2, 1, figsize=(6, 7), gridspec_kw=dict(height_ratios=[1.1, 1]))
+
+    # Top: one sound = several pitches added together.
+    t = np.linspace(0, 1000, 2000)
+    parts = [np.sin(2 * np.pi * f * t * 1e-6 + i) for i, (f, _, _) in enumerate(pitches)]
+    for i, (part, (_, name, color)) in enumerate(zip(parts, pitches)):
+        top.plot(t, part + 3 * (3 - i), color=color, lw=1.2)
+        top.text(-20, 3 * (3 - i), name, ha="right", va="center", color=color, fontsize=8)
+    top.plot(t, sum(parts) / 1.5, "k", lw=1.6)
+    top.text(-20, 0, "疊起來\n= 聽到的聲音", ha="right", va="center", fontsize=8)
+    for y in (7.5, 4.5, 1.5):
+        top.text(500, y, "+" if y > 2 else "=", ha="center", va="center", fontsize=12, color="grey")
+    top.set_xlim(-210, 1000)
+    top.set_xticks(range(0, 1001, 200))
+    top.set_yticks([])
+    top.set_xlabel("時間（微秒）")
+    top.set_title("一段聲音 = 好幾個高低音疊在一起，像合唱團", fontsize=11)
+    for side in ("left", "right", "top"):
+        top.spines[side].set_visible(False)
+
+    # Bottom: each pitch's vote for every trial delay.
+    lags = np.linspace(-170, 170, 2000)
+    votes = [np.cos(2 * np.pi * f * (lags - true_us) * 1e-6) for f, _, _ in pitches]
+    for vote, (_, name, color) in zip(votes, pitches):
+        ax.plot(lags, vote, color=color, lw=1, label=f"{name} 的票")
+    ax.plot(lags, sum(votes) / len(votes), "k", lw=2.2, label="大家的票加起來")
+    ax.axvline(true_us, color="C3", ls=":", lw=1.5, label=f"真正的時間差 {true_us:.0f} 微秒")
+    ax.set_xlabel("猜的時間差：mic 0 比 mic 1 晚多少（微秒）")
+    ax.set_ylabel("票數")
+    ax.set_title("每位評審覺得好幾個地方都可能；\n只有真正的時間差，大家都同意", fontsize=11)
+    ax.legend(fontsize=7, loc="upper center", bbox_to_anchor=(0.5, -0.22), ncol=3)
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+
+
+def fig_votes(path):
+    """Section 3: the full GCC-PHAT vote, counted at photos and between them."""
+    mic0, mic1, true_us = thirty_degree_signals()
+    fig, ax = plt.subplots(figsize=(6, 3.6))
     for interp, style, label in [
         (1, "o-", "只在每張照片計票（每 20.8 微秒）"),
         (16, "-", "照片之間補畫後計票（每 1.3 微秒）"),
@@ -177,7 +227,7 @@ def fig_correlation(path):
     ax.axvline(true_us, color="k", ls=":", label=f"真正的時間差 {true_us:.0f} 微秒")
     ax.set_xlabel("猜的時間差：mic 0 比 mic 1 晚多少（微秒）")
     ax.set_ylabel("票數（GCC-PHAT 分數）")
-    ax.set_title("評審投票：票數最高的地方，就是時間差")
+    ax.set_title("所有評審一起投票：票數最高的地方，就是時間差")
     ax.legend(fontsize=8)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
@@ -264,7 +314,9 @@ def main():
 
     fig_geometry(OUT / "step1_geometry.png")
     fig_ruler(OUT / "step1_ruler.png")
-    fig_correlation(OUT / "step1_correlation.png")
+    fig_waveform(OUT / "step1_waveform.png")
+    fig_frequencies(OUT / "step1_frequencies.png")
+    fig_votes(OUT / "step1_votes.png")
     fig_sweep(OUT / "step1_sweep.png", truth, whole, fine)
 
     print(f"Largest delay possible: {MAX_TAU * 1e6:.1f} us = {MAX_TAU * FS:.2f} samples")
