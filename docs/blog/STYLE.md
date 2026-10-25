@@ -73,6 +73,7 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 | Angle error spreads with distance | 手電筒：手轉一點，遠處光點移很多 | |
 | Front-back ambiguity | 照鏡子 | |
 
+| Angle (1D) to map (2D) | 一條線只分得出左右，排成一個面才分得出上下；倉鴞的耳朵一高一低 | |
 | Delay-and-sum beamforming | 每個方向都猜一次；猜對時大家齊步走（運動會進場） | 軍訓 |
 | Beamforming output | 對齊程度（地圖顏色，1 = 最整齊） | |
 | Main lobe | 紅點 | |

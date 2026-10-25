@@ -81,6 +81,34 @@ def show_map(ax, pmap, title):
     return im
 
 
+def fig_layout(path):
+    """Two mics in a line have only a left-right distance; a grid has up-down too."""
+    fig, axes = plt.subplots(1, 2, figsize=(7, 4.4), sharex=True, sharey=True)
+    for ax, mics, title in [(axes[0], two_mics(), "排成一條線（2 支）：只分得出左右"),
+                            (axes[1], uma16(), "排成一個面（UMA-16）：上下也分得出")]:
+        cm = mics * 100
+        ax.plot(cm[:, 0], cm[:, 1], "o", ms=9, color="C0")
+        x0, x1, y0, y1 = cm[:, 0].min(), cm[:, 0].max(), cm[:, 1].min(), cm[:, 1].max()
+        ax.annotate("", xy=(x1, -9), xytext=(x0, -9), arrowprops=dict(arrowstyle="<->", color="C1", lw=2))
+        ax.text(0, -10.5, "左右有距離", ha="center", va="top", fontsize=9, color="C1")
+        if len(mics) > 2:
+            ax.annotate("", xy=(-9, y1), xytext=(-9, y0), arrowprops=dict(arrowstyle="<->", color="C2", lw=2))
+            ax.text(-10.5, 0, "上下也有距離", ha="right", va="center", fontsize=9, color="C2", rotation=90)
+        else:
+            ax.text(-10.5, 0, "上下沒有距離", ha="right", va="center", fontsize=9, color="0.5", rotation=90)
+        ax.set_title(title, fontsize=10)
+        ax.set_aspect("equal")
+        ax.set_xlim(-14, 10)
+        ax.set_ylim(-14, 10)
+        ax.set_xticks(range(-10, 11, 5))
+        ax.set_yticks(range(-10, 11, 5))
+        ax.set_xlabel("左右（公分）")
+    axes[0].set_ylabel("上下（公分）")
+    fig.suptitle("麥克風要排成一個面，才分得出上下", fontsize=11)
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+
+
 def fig_lineup(path):
     """Shift-and-add for a right and a wrong guess, four mics in a row."""
     mics = uma16()[:4]  # one row: x = -6.3, -2.1, 2.1, 6.3 cm
@@ -190,6 +218,7 @@ def fig_noise(path, snrs, curves):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
 
+    fig_layout(OUT / "step2_layout.png")
     fig_lineup(OUT / "step2_lineup.png")
 
     uma_bird = bird_map(uma16())
