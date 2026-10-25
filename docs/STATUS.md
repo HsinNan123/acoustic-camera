@@ -5,7 +5,9 @@ Updated: 2026-10-25
 ## Stage
 Step 2 code done: a 16-mic map finds a bird at (20, 10) deg; 19 tests pass.
 Chapter 1 live on Vocus; chapter 2 drafted (`docs/blog/02-sound-map.md`), not reviewed.
-Simulation says buy UMA-16 (spot 24 vs 40 deg, ghost 34 vs 66%); price not checked.
+Direction changed 2026-10-25: Sipeed 6+1 USB board steers the outdoor Tapo C545D
+telephoto lens toward the sound (`docs/research/sipeed-ptz-c545d.md`). Step 3a, PTZ
+control from Python, is written and waits for the Camera Account.
 
 ## In progress
 - Chapter 2: Aaron reviews (batch until DONE); then Claude publishes on Vocus from
@@ -13,27 +15,32 @@ Simulation says buy UMA-16 (spot 24 vs 40 deg, ghost 34 vs 66%); price not check
 - Chapter 2 opening picture is made in Gemini; download waits for Aaron's OK.
 
 ## Blockers (needs Aaron)
-- Price check and purchase of the array (UMA-16 first choice).
+- Tapo Camera Account and `.env` (TAPO_HOST, TAPO_USER, TAPO_PASS) for the PTZ test.
+- Buy the Sipeed 6+1 mic board with the MA-USB8 USB board; check the seller ships
+  the USB board (raw 6 channels over USB), not the bare I2S board.
 
 ## Next (in order)
-1. Aaron: review chapter 2. · Hours: 1
-1a. Aaron: decide the direction: Sipeed 6+1 board steering the outdoor Tapo C545D
-   (`docs/research/sipeed-ptz-c545d.md`), or UMA-16 + webcam heat map. If Sipeed,
-   steps 3-5 and bonus post section 8 change. · Hours: 0.5
-2. Aaron: check Taobao prices for UMA-16, Pawpaw PXUA216MB-DL2-M, Sipeed MicArray +
-   MA-USB8; confirm raw PCM of every mic over USB. Buy one. · Hours: 0.5
-3. Step 3: heat map over the laptop webcam, simulated moving source. Pass: saved frames
-   show the hot spot on the expected pixel. Post 3 + case. · Hours: 3
-4. Step 4: live audio from the real array. Pass: phone playing bird song, hot spot on
-   the phone, lag under 0.5 s. Post 4. · Hours: 3
-5. Step 5: bird mode: 2-8 kHz band-pass, event trigger, save short clips. Pass: one
-   real bird located. Post 5 + case. · Hours: 3
-6. LinkedIn post: wait for a real demo (Aaron, 2026-10-25). · Hours: 0.5
+1. Aaron: create the Tapo Camera Account, fill `.env`. Run
+   `scripts/step3_ptz_test.py`. Pass: the script lists what PTZ moves the C545D
+   accepts and the camera turns about 30 deg and back. · Hours: 0.5
+2. Aaron: review chapter 2. · Hours: 1
+3. Aaron: buy Sipeed 6+1 + MA-USB8 (Taobao). · Hours: 0.5
+4. Step 3b: record the 6 raw channels, find the direction with our code. Pass: phone
+   playing bird song, direction within 10 deg. · Hours: 1.5
+5. Step 3c: map mic angle to camera angle (mount the board next to the camera).
+   Pass: camera turns to the phone, phone in the telephoto view. Post 3. · Hours: 1.5
+6. Step 4: bird mode: 2-8 kHz band, trigger, turn, save a short clip; pan limited to
+   the garden. Pass: one real bird filmed. Post 4 + case. · Hours: 2
+7. Bonus post: rewrite section 8 and summary point 3 for the Sipeed path. · Hours: 0.5
+8. LinkedIn post: wait for a real demo (Aaron, 2026-10-25). · Hours: 0.5
 
 ## Known debt (not blocking)
 - None.
 
 ## Decisions log
+- 2026-10-25: Sipeed 6+1 board steering the Tapo C545D, not UMA-16 + webcam heat map;
+  why: the telephoto view (57x32 deg) needs only a rough direction, the Sipeed board
+  is cheaper, Aaron already has the camera. Reverse: buy UMA-16, back to the webcam.
 - 2026-10-24: Blog style guide `docs/blog/STYLE.md`; why: chapter 1 took about 30
   corrections, the guide turns each into a rule and a checklist. Reverse: delete it.
 - 2026-10-23: Simulate with numpy plane waves, not pyroomacoustics; why: no echoes

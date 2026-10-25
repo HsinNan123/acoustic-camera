@@ -6,13 +6,15 @@ Volatile state (stage, blockers, next, decisions) is `docs/STATUS.md`.
 
 ## Context
 - **What it is:** an acoustic camera prototype: a microphone array finds where a sound
-  comes from and draws its position and volume as a heat map on live video.
+  comes from and draws its position and volume as a heat map on live video. Since
+  2026-10-25 the Sipeed 6+1 USB board turns the outdoor Tapo C545D telephoto lens
+  toward the sound.
 - **For whom:** Aaron first (learning, finding birds outside his window); readers of
   his public build log.
 - **Goals, in order:** 1. learn the method and explain it; 2. a public build log with a
   demo GIF per step; 3. a working live demo on a real bird.
 - **Stack and where it runs:** Python 3.13, numpy, scipy, matplotlib (simulation and
-  plots), pytest; later sounddevice (audio in), opencv-python (video). Runs
+  plots), pytest, onvif-zeep (camera PTZ); later sounddevice (audio in), opencv-python (video). Runs
   on Aaron's Windows laptop. No server, no web. Public repo:
   https://github.com/HsinNan123/acoustic-camera
 - **Scale:** one user, one machine. Rules out cloud, accounts, database.
