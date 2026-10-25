@@ -69,6 +69,17 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 | Angle error spreads with distance | 手電筒：手轉一點，遠處光點移很多 | |
 | Front-back ambiguity | 照鏡子 | |
 
+| Delay-and-sum beamforming | 每個方向都猜一次；猜對時大家齊步走（運動會進場） | 軍訓 |
+| Beamforming output | 對齊程度（地圖顏色，1 = 最整齊） | |
+| Main lobe | 紅點 | |
+| Array | 板子（UMA-16、Sipeed） | |
+| Wavelength | 浪頭間距（波長, defined once） | |
+| Why low sound is blurry | 浮板：浪很長，整塊浮板一起上下，感覺不出方向 | 尺 (taken by chapter 1) |
+| Grating lobe / strong sidelobe | 鬼影 | |
+| Spatial aliasing | 車輪倒轉：照片拍得不夠密 | |
+| 2-mic ambiguity on a map | 一條紅色直帶 | |
+| Array gain | 多幾隻耳朵一起聽 | |
+
 New chapters add rows here; they do not invent a second word for an existing row.
 
 ## 6. Figures

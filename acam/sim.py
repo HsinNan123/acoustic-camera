@@ -2,6 +2,7 @@
 import numpy as np
 
 from acam.delay import SPEED_OF_SOUND
+from acam.geometry import direction
 
 
 def fractional_delay(x, tau, fs):
@@ -9,6 +10,20 @@ def fractional_delay(x, tau, fs):
     n = len(x)
     f = np.fft.rfftfreq(n, 1 / fs)
     return np.fft.irfft(np.fft.rfft(x) * np.exp(-2j * np.pi * f * tau), n)
+
+
+def plane_wave(source, fs, mics, az_deg, el_deg, snr_db=None, seed=None, c=SPEED_OF_SOUND):
+    """Signals at every mic (rows) from a far source in direction (az, el).
+
+    A mic nearer the source hears it earlier: delay = -(position . direction) / c.
+    """
+    u = direction(az_deg, el_deg)
+    sig = np.array([fractional_delay(source, -(p @ u) / c, fs) for p in mics])
+    if snr_db is not None:
+        rng = np.random.default_rng(seed)
+        noise_rms = np.std(source) * 10 ** (-snr_db / 20)
+        sig = sig + rng.normal(0, noise_rms, sig.shape)
+    return sig
 
 
 def two_mic_plane_wave(source, fs, angle_deg, d, snr_db=None, seed=None, c=SPEED_OF_SOUND):

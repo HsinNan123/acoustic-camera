@@ -1,33 +1,31 @@
 # Status
 
-Updated: 2026-10-24
+Updated: 2026-10-25
 
 ## Stage
-Step 1 code done: two simulated mics find the angle (GCC-PHAT), 10 tests pass.
-Max error 0.5 deg within +-60 deg. Chapter 1 reviewed with Aaron, rewritten for a
-12-year-old, 8 figures in Chinese; style rules in `docs/blog/STYLE.md`.
-Path: simulate first (steps 1-3), buy an array after step 2. Each step: post + git tag.
+Step 2 code done: a 16-mic map finds a bird at (20, 10) deg; 19 tests pass.
+Chapter 1 live on Vocus; chapter 2 drafted (`docs/blog/02-sound-map.md`), not reviewed.
+Simulation says buy UMA-16 (spot 24 vs 40 deg, ghost 34 vs 66%); price not checked.
 
 ## In progress
-- Post 1 is live on Vocus (2026-10-24): https://vocus.cc/article/6adcc21cfd89780001a98cf2.
-  LinkedIn short post not done.
+- Chapter 2: Aaron reviews (batch until DONE); then Claude publishes on Vocus from
+  `docs/blog/02-sound-map.vocus.md`.
+- Chapter 2 opening picture is made in Gemini; download waits for Aaron's OK.
 
 ## Blockers (needs Aaron)
-- None.
+- Price check and purchase of the array (UMA-16 first choice).
 
 ## Next (in order)
-1. Post 1 on LinkedIn (English, short, links to Vocus and tag `step-1`). · Hours: 0.5
-2. Step 2: delay-and-sum beamformer, 2D power map. Simulate the UMA-16 4x4 grid and the
-   Sipeed 6-mic circle side by side. Pass: peak within 3 deg at 1, 2, 4 kHz. Post 2:
-   "Which array to buy, decided by simulation". · Hours: 3
-3. Aaron: check Taobao prices for UMA-16, Pawpaw PXUA216MB-DL2-M, Sipeed MicArray +
+1. Aaron: review chapter 2. · Hours: 1
+2. Aaron: check Taobao prices for UMA-16, Pawpaw PXUA216MB-DL2-M, Sipeed MicArray +
    MA-USB8; confirm raw PCM of every mic over USB. Buy one. · Hours: 0.5
-4. Step 3: heat map and dB label over the laptop webcam, simulated moving source.
-   Pass: saved frames show the hot spot on the expected pixel. Post 3 + case. · Hours: 3
-5. Step 4: live audio from the real array. Pass: phone playing bird song, hot spot on
+3. Step 3: heat map over the laptop webcam, simulated moving source. Pass: saved frames
+   show the hot spot on the expected pixel. Post 3 + case. · Hours: 3
+4. Step 4: live audio from the real array. Pass: phone playing bird song, hot spot on
    the phone, lag under 0.5 s. Post 4. · Hours: 3
-6. Step 5: bird mode: 2-8 kHz band-pass, event trigger, save short clips. Pass: one
+5. Step 5: bird mode: 2-8 kHz band-pass, event trigger, save short clips. Pass: one
    real bird located. Post 5 + case. · Hours: 3
+6. LinkedIn post: wait for a real demo (Aaron, 2026-10-25). · Hours: 0.5
 
 ## Known debt (not blocking)
 - None.
