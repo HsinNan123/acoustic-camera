@@ -148,7 +148,8 @@ Aaron asked for this on 2026-10-24. Claude makes it; Aaron does not need to.
    real brand or person. If not, ask Gemini for one new version, saying what to fix.
 4. **Download**: ask Aaron in one line first (file, source, size), as every download
    needs his OK. Then use Gemini's "Download full size image" button; the file lands
-   in `C:\Users\Aaron\Downloads`.
+   in `C:\Users\Aaron\Downloads`, either as `Gemini_Generated_Image_*.jpg` or as an
+   unnamed `*.tmp` (chapter 2). Check it is a whole JPEG (opens, ends in `ff d9`).
 5. **Save** as `docs/blog/img/stepN_concept.jpg`, resized to 1600 px wide, JPEG
    quality 85 (about 120 KB). Leave the original in Downloads.
 6. **Caption** under the image: what to notice, then `（AI 生成，Gemini）`.
