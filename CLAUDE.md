@@ -14,7 +14,7 @@ Volatile state (stage, blockers, next, decisions) is `docs/STATUS.md`.
 - **Goals, in order:** 1. learn the method and explain it; 2. a public build log with a
   demo GIF per step; 3. a working live demo on a real bird.
 - **Stack and where it runs:** Python 3.13, numpy, scipy, matplotlib (simulation and
-  plots), pytest, onvif-zeep (camera PTZ); later sounddevice (audio in), opencv-python (video). Runs
+  plots), pytest, onvif-zeep (camera PTZ), opencv-python (RTSP video); later sounddevice (audio in). Runs
   on Aaron's Windows laptop. No server, no web. Public repo:
   https://github.com/HsinNan123/acoustic-camera
 - **Scale:** one user, one machine. Rules out cloud, accounts, database.
@@ -48,4 +48,8 @@ Volatile state (stage, blockers, next, decisions) is `docs/STATUS.md`.
 - Ship: `main` is public on GitHub. Never commit audio, video or `.env*` files.
 
 ## Gotchas (learned the hard way)
-- _[one line each; a fact that stopped changing in STATUS moves here]_
+- Tapo C545D RTSP: `stream1`/`stream2` are the fixed wide lens, `stream6`/`stream7` the
+  moving telephoto lens. ONVIF lists only streams 1, 2, 8, but its PTZ moves the telephoto.
+- C545D PTZ (measured 2026-10-25, `scripts/step3_ptz_calibrate.py`): pan 186 deg per ONVIF
+  unit, +x turns right; tilt 44 deg per unit, +y turns down. Gear slack is about 2 deg
+  on pan: approach every target from the same side.

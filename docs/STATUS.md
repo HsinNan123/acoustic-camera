@@ -8,8 +8,8 @@ Chapter 1 live on Vocus; chapter 2 drafted (`docs/blog/02-sound-map.md`), not re
 Direction changed 2026-10-25: Sipeed 6+1 USB board steers the outdoor Tapo C545D
 telephoto lens toward the sound (`docs/research/sipeed-ptz-c545d.md`).
 Step 3a passed 2026-10-25: ONVIF moves the C545D (firmware 1.1.7). Absolute, relative
-and continuous pan all work; a 0.1-unit pan settles in 1.4 s or less. Degrees per
-unit not measured yet.
+and continuous pan all work; a 0.1-unit pan settles in 1.4 s or less. Calibrated from
+RTSP frames: pan 186 deg/unit, tilt 44 deg/unit (facts in CLAUDE.md Gotchas).
 
 ## In progress
 - Chapter 2: Aaron reviews (batch until DONE); then Claude publishes on Vocus from
@@ -18,10 +18,7 @@ unit not measured yet.
 
 ## Blockers (needs Aaron)
 - Buy the Sipeed 6+1 mic board with the MA-USB8 USB board; check the seller ships
-  the USB board (raw 6 channels over USB), not the bare I2S 1. Step 3a': measure degrees per ONVIF unit: grab an RTSP frame before and after a
-   pan, match the shift. Pass: a fixed number for pan and tilt. · Hours: 0.5
-deg and back. · Hours: 0.5
-2. Aaron: review chapter 2. · Hours: 1
+  the USB board (raw 6 channels over USB), not the bare I2S 2. Aaron: review chapter 2. · Hours: 1
 3. Aaron: buy Sipeed 6+1 + MA-USB8 (Taobao). · Hours: 0.5
 4. Step 3b: record the 6 raw channels, find the direction with our code. Pass: phone
    playing bird song, direction within 10 deg. · Hours: 1.5
