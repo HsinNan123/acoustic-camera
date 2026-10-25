@@ -14,7 +14,7 @@ OUT = Path(__file__).resolve().parents[1] / "docs" / "blog" / "img"
 plt.rcParams["font.family"] = ["Microsoft JhengHei", "Noto Sans TC"]
 plt.rcParams["axes.unicode_minus"] = False
 
-# (project, mics, way): way 1 = bicycle (small board), 2 = car (Pi + USB board), 3 = train (FPGA).
+# (project, mics, way): way 1 = slingshot (small board), 2 = bow (Pi + USB board), 3 = cannon (FPGA).
 PROJECTS = [
     ("ESP32\nAcousticCam", 4, 1),
     ("Sipeed K210\nMicArray", 7, 1),
@@ -22,7 +22,7 @@ PROJECTS = [
     ("Sesenta\n一塊", 60, 3),
     ("jduanen\n螺旋板", 96, 3),
 ]
-WAYS = {1: ("腳踏車：小電腦板", "C0"), 2: ("汽車：樹莓派＋麥克風板", "C2"), 3: ("火車：FPGA 大陣列", "C3")}
+WAYS = {1: ("彈弓：小電腦板", "C0"), 2: ("弓箭：樹莓派＋麥克風板", "C2"), 3: ("大砲：FPGA 大陣列", "C3")}
 
 
 def main():

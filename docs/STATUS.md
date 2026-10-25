@@ -17,6 +17,9 @@ Simulation says buy UMA-16 (spot 24 vs 40 deg, ghost 34 vs 66%); price not check
 
 ## Next (in order)
 1. Aaron: review chapter 2. · Hours: 1
+1a. Aaron: decide the direction: Sipeed 6+1 board steering the outdoor Tapo C545D
+   (`docs/research/sipeed-ptz-c545d.md`), or UMA-16 + webcam heat map. If Sipeed,
+   steps 3-5 and bonus post section 8 change. · Hours: 0.5
 2. Aaron: check Taobao prices for UMA-16, Pawpaw PXUA216MB-DL2-M, Sipeed MicArray +
    MA-USB8; confirm raw PCM of every mic over USB. Buy one. · Hours: 0.5
 3. Step 3: heat map over the laptop webcam, simulated moving source. Pass: saved frames
