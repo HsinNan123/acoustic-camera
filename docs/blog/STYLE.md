@@ -26,8 +26,10 @@ Run the checklist at the end before handing a draft to Aaron.
 
 - State the knowledge point in a child's words. Not a story hook ("第一個驚訝"),
   not a question, not a formula (no "∝ 1/cos θ", no "5.9 個取樣點").
-- One idea per heading. If it needs "；", the idea is the part before it, or the
-  metaphor carries both halves (例："在吵鬧的教室找叫你的朋友：太吵會突然指錯，多叫幾聲就找得到").
+- One idea per heading. If it needs "；", the idea is the part before it.
+- The heading states the finding; the metaphor stays in the body (Aaron, 2026-10-26:
+  "像海上的浮板" out of the heading). 例："3. 高音比低音容易定位". Name the finding, not
+  the topic: never "…的關係".
 - Results from an experiment are 發現 (findings), not 規則. A 規則 is how a method
   is designed (例：GCC-PHAT 每位評審只有一票).
 
@@ -74,11 +76,12 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 | Front-back ambiguity | 照鏡子 | |
 
 | Angle (1D) to map (2D) | 一條線只分得出左右，排成一個面才分得出上下；倉鴞的耳朵一高一低 | |
-| Delay-and-sum beamforming | 每個方向都猜一次；猜對時大家齊步走（運動會進場） | 軍訓 |
+| Delay-and-sum beamforming | 每個方向都計算一次；方向對時大家齊步走（運動會進場）。板子不動，電腦算 | 軍訓, 猜, 掃過, 掃描 |
+| The map itself | 聲源定位地圖 | 聲音地圖, 定位地圖 |
 | Beamforming output | 對齊程度（地圖顏色，1 = 最整齊） | |
 | Main lobe | 紅點 | |
 | Array | 板子（UMA-16、Sipeed） | |
-| Wavelength | 浪頭間距（波長, defined once） | |
+| Wavelength | 波長, defined once as 兩個浪頭之間的距離; 浪頭 only inside the 浮板 metaphor | 浪頭間距 after the definition |
 | Why low sound is blurry | 浮板：浪很長，整塊浮板一起上下，感覺不出方向 | 尺 (taken by chapter 1) |
 | Grating lobe / strong sidelobe | 鬼影 | |
 | Spatial aliasing | 車輪倒轉：照片拍得不夠密 | |

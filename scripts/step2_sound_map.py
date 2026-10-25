@@ -8,6 +8,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image, ImageOps
 from scipy.signal import chirp
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -109,8 +110,65 @@ def fig_layout(path):
     fig.savefig(path, dpi=150)
 
 
+def fig_cones(path, view=(20, -115)):
+    """Why 2 mics give a band and 3 give a point: each pair fixes one cone of directions."""
+    u = direction(40, 35)  # illustration only: at (20, 10) the cones are nearly flat; x right, y up, z ahead
+    # Plot axes: X = right, Y = ahead, Z = up, so "up" is up on the page.
+    def to_plot(v):
+        return v[..., 0], v[..., 2], v[..., 1]
+
+    def cone(axis, cos_a):
+        axis = np.asarray(axis, float)
+        b = np.cross(axis, [0, 0, 1.0]) if abs(axis[2]) < 0.9 else np.cross(axis, [1.0, 0, 0])
+        b /= np.linalg.norm(b)
+        c = np.cross(axis, b)
+        phi = np.linspace(0, 2 * np.pi, 60)[None, :, None]
+        s = np.linspace(0, 1, 2)[:, None, None]
+        sin_a = np.sqrt(1 - cos_a ** 2)
+        rays = cos_a * axis + sin_a * (np.cos(phi) * b + np.sin(phi) * c)
+        return to_plot(s * rays), to_plot(rays[0])
+
+    fig = plt.figure(figsize=(8, 3.8))
+    panels = [("2 支左右排：鳥可能在這個圓錐上的任何地方", False),
+              ("再加 1 支在上面：兩個圓錐只交在前、後兩條線", True)]
+    for k, (title, third) in enumerate(panels):
+        ax = fig.add_subplot(1, 2, k + 1, projection="3d")
+        surf, rim = cone([1, 0, 0], u[0])
+        ax.plot_surface(*surf, color="C1", alpha=0.25, linewidth=0)
+        ax.plot(*rim, c="C1", lw=1.2)
+        mics = [(-0.1, 0, 0), (0.1, 0, 0)] + ([(-0.1, 0.2, 0)] if third else [])
+        if third:
+            surf, rim = cone([0, 1, 0], u[1])
+            ax.plot_surface(*surf, color="C2", alpha=0.25, linewidth=0)
+            ax.plot(*rim, c="C2", lw=1.2)
+            back = u * np.array([1, 1, -1])
+            ax.plot(*to_plot(np.array([[0, 0, 0], back])), "--", c="0.3", lw=2)
+            ax.text(*to_plot(back * 1.12), "背後的鏡子", fontsize=8, color="0.3")
+            ax.plot(*to_plot(np.array([[0, 0, 0], u])), c="C3", lw=2.5)
+        m = np.array(mics)
+        ax.scatter(*to_plot(m), s=30, c="C0", depthshade=False)
+        ax.scatter(*to_plot(u), marker="*", s=220, c="C3", depthshade=False)
+        ax.text(*to_plot(u * 1.1), "鳥", fontsize=10, color="C3")
+        for vec, name in [((1.4, 0, 0), "右"), ((0, 1.4, 0), "上"), ((0, 0, 1.4), "前")]:
+            ax.plot(*to_plot(np.array([[0, 0, 0], vec])), c="0.6", lw=0.8)
+            ax.text(*to_plot(np.array(vec) * 1.08), name, fontsize=9, color="0.4")
+        ax.set_xlim(-1.2, 1.2)
+        ax.set_ylim(-1.2, 1.2)
+        ax.set_zlim(-1.2, 1.2)
+        ax.set_box_aspect((1, 1, 1))
+        ax.view_init(elev=view[0], azim=view[1])
+        ax.set_axis_off()
+        ax.set_title(title, fontsize=9.5, y=0.98)
+    fig.suptitle("每一對麥克風只知道「在某個圓錐上」；兩個圓錐交起來，才剩下一個方向", fontsize=11)
+    fig.subplots_adjust(left=0, right=1, bottom=-0.25, top=0.95, wspace=0)
+    fig.savefig(path, dpi=150, bbox_inches="tight")
+    img = Image.open(path).convert("RGB")  # 3D axes keep empty space; cut it off
+    x0, y0, x1, y1 = ImageOps.invert(img).getbbox()
+    ImageOps.expand(img.crop((x0, y0, x1, y1)), border=16, fill="white").save(path)
+
+
 def fig_lineup(path):
-    """Shift-and-add for a right and a wrong guess, four mics in a row."""
+    """Shift-and-add for a right and a wrong direction, four mics in a row."""
     mics = uma16()[:4]  # one row: x = -6.3, -2.1, 2.1, 6.3 cm
     n = 960
     t = np.arange(n) / FS
@@ -118,7 +176,7 @@ def fig_lineup(path):
     sig = plane_wave(pulse, FS, mics, 40, 0)
     t_us = (t - 0.01) * 1e6
     fig, axes = plt.subplots(1, 2, figsize=(7, 4.2), sharey=True)
-    for ax, guess, title in [(axes[0], 40, "猜 40 度（猜對）"), (axes[1], -20, "猜 -20 度（猜錯）")]:
+    for ax, guess, title in [(axes[0], 40, "算 40 度（方向對）"), (axes[1], -20, "算 -20 度（方向錯）")]:
         u = direction(guess, 0)
         shifted = [fractional_delay(s, (p @ u) / SPEED_OF_SOUND, FS) for s, p in zip(sig, mics)]
         for k, s in enumerate(shifted):
@@ -133,7 +191,7 @@ def fig_lineup(path):
         ax.set_yticks([])
         for side in ("left", "right", "top"):
             ax.spines[side].set_visible(False)
-    fig.suptitle("猜對方向：四支的波形對齊，加起來很大；猜錯：對不齊，互相抵消", fontsize=11)
+    fig.suptitle("方向對：四支的波形對齊，加起來很大；方向錯：對不齊，互相抵消", fontsize=11)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
     return None
@@ -142,7 +200,7 @@ def fig_lineup(path):
 def fig_map(path, pmap):
     fig, ax = plt.subplots(figsize=(6, 4.2))
     im = show_map(ax, pmap, "")
-    ax.set_title("UMA-16 掃過每個方向：最紅的地方就是鳥（白色＋是鳥真正的位置）", fontsize=10)
+    ax.set_title("板子不動，電腦把每個方向都計算一次：最紅的地方就是鳥（白色＋是鳥真正的位置）", fontsize=10)
     ax.set_xlabel("左右角度（度）：← 左　右 →")
     ax.set_ylabel("上下角度（度）：↓ 下　上 ↑")
     cb = fig.colorbar(im, ax=ax)
@@ -219,6 +277,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
 
     fig_layout(OUT / "step2_layout.png")
+    fig_cones(OUT / "step2_cones.png")
     fig_lineup(OUT / "step2_lineup.png")
 
     uma_bird = bird_map(uma16())
