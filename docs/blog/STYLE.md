@@ -43,6 +43,10 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 - **Define every new word at first use**: 微秒, 正確率, 訊雜比, dB.
 - **Say what a number counts.** "整數" alone confused Aaron (seconds?); write
   "晚 0、1、2、3… 張照片".
+- **Software and algorithms never get a hardware metaphor**: readers mix them up with
+  the boards (Aaron, 2026-10-26: 瞄準鏡 for software). Use a non-object one (食譜書).
+- **Stay on topic**: cut a side question that does not move the post's idea (the
+  Arduino section), and keep notes about the post itself out of it.
 - **Plain verbs over vivid ones.** "雜訊多的時候，聽久一點，比較好判斷", not
   "聽久一點可以撐住". "猜照片之間", not "補畫".
 - **dB always comes with 幾倍**: "-10 dB（雜訊大 10 倍）". dB is a multiply scale,
@@ -80,10 +84,10 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 | 2-mic ambiguity on a map | 一條紅色直帶 | |
 | Array gain | 多幾隻耳朵一起聽 | |
 
-| DIY build tiers | 彈弓（小電腦板）、弓箭（樹莓派＋麥克風板）、大砲（FPGA 大陣列）；瞄準鏡（軟體工具箱，每一種都能裝） | 走路、腳踏車、汽車、火車 |
+| DIY build tiers | 彈弓（小電腦板）、弓箭（樹莓派＋麥克風板）、大砲（FPGA 大陣列） | 走路、腳踏車、汽車、火車 |
+| Software toolbox | 食譜書：每一道食譜是一種方法（齊步走是其中一道） | 瞄準鏡 |
 | Small board + long lens | 彈弓負責聽（給方向），大砲負責看（長鏡頭轉過去拍） | |
 | Why weapon words are safe here | 拍鳥的人把拍鳥叫「打鳥」，長鏡頭叫「大砲」；工具都是拿來聽鳥、看鳥 | 射鳥, 打下來 |
-| Data rate too high for a small MCU | 吸管太細，喝不了 16 杯飲料 | |
 | Open source / licence | 開源；授權（沒寫授權 = 只能看，不能拿來用） | |
 
 New chapters add rows here; they do not invent a second word for an existing row.
