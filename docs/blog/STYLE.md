@@ -81,6 +81,7 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 | Array gain | 多幾隻耳朵一起聽 | |
 
 | DIY build tiers | 彈弓（小電腦板）、弓箭（樹莓派＋麥克風板）、大砲（FPGA 大陣列）；瞄準鏡（軟體工具箱，每一種都能裝） | 走路、腳踏車、汽車、火車 |
+| Small board + long lens | 彈弓負責聽（給方向），大砲負責看（長鏡頭轉過去拍） | |
 | Why weapon words are safe here | 拍鳥的人把拍鳥叫「打鳥」，長鏡頭叫「大砲」；工具都是拿來聽鳥、看鳥 | 射鳥, 打下來 |
 | Data rate too high for a small MCU | 吸管太細，喝不了 16 杯飲料 | |
 | Open source / licence | 開源；授權（沒寫授權 = 只能看，不能拿來用） | |

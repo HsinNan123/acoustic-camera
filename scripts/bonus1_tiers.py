@@ -17,8 +17,8 @@ plt.rcParams["axes.unicode_minus"] = False
 # (project, mics, way): way 1 = slingshot (small board), 2 = bow (Pi + USB board), 3 = cannon (FPGA).
 PROJECTS = [
     ("ESP32\nAcousticCam", 4, 1),
-    ("Sipeed K210\nMicArray", 7, 1),
-    ("UMA-16\n（我選的）", 16, 2),
+    ("Sipeed\nMicArray（我選的）", 7, 1),
+    ("UMA-16", 16, 2),
     ("Sesenta\n一塊", 60, 3),
     ("jduanen\n螺旋板", 96, 3),
 ]

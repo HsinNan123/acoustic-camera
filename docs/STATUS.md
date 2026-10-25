@@ -26,7 +26,6 @@ RTSP frames: pan 186 deg/unit, tilt 44 deg/unit (facts in CLAUDE.md Gotchas).
    Pass: camera turns to the phone, phone in the telephoto view. Post 3. · Hours: 1.5
 6. Step 4: bird mode: 2-8 kHz band, trigger, turn, save a short clip; pan limited to
    the garden. Pass: one real bird filmed. Post 4 + case. · Hours: 2
-7. Bonus post: rewrite section 8 and summary point 3 for the Sipeed path. · Hours: 0.5
 8. LinkedIn post: wait for a real demo (Aaron, 2026-10-25). · Hours: 0.5
 
 ## Known debt (not blocking)
