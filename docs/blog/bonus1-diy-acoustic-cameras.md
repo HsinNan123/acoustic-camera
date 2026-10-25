@@ -141,6 +141,7 @@
 - jduanen 的聲音相機：https://github.com/jduanen/Acoustic-Camera
 - Sesenta：https://hackaday.io/project/192750-sesenta-open-source-tileable-acoustic-camera
 - 我自己的程式：https://github.com/HsinNan123/acoustic-camera
+- 第二篇：https://vocus.cc/article/6ade3729fd89780001e8fa1b
 
 ## 圖片出處與授權
 

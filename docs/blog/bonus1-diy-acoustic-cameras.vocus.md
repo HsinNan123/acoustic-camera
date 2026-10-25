@@ -1,6 +1,6 @@
 # Bonus post 1: Vocus publish kit
 
-Not published yet. Suggested order: after chapter 2.
+Published 2026-10-26: https://vocus.cc/article/6ade384efd89780001e92a0c (上一篇: chapter 2)
 
 | Setting | Value |
 |---|---|

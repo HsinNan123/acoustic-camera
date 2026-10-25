@@ -1,10 +1,11 @@
 # Status
 
-Updated: 2026-10-25
+Updated: 2026-10-26
 
 ## Stage
-Step 2 code done: a 16-mic map finds a bird at (20, 10) deg; 19 tests pass.
-Chapter 1 live on Vocus; chapter 2 drafted (`docs/blog/02-sound-map.md`), not reviewed.
+Step 2 code done: a 16-mic map finds a bird at (20, 10) deg; 23 tests pass.
+Live on Vocus: chapter 1, chapter 2 (https://vocus.cc/article/6ade3729fd89780001e8fa1b)
+and bonus post 1 (https://vocus.cc/article/6ade384efd89780001e92a0c), 2026-10-26.
 Direction changed 2026-10-25: Sipeed 6+1 USB board steers the outdoor Tapo C545D
 telephoto lens toward the sound (`docs/research/sipeed-ptz-c545d.md`).
 Step 3a passed 2026-10-25: ONVIF moves the C545D (firmware 1.1.7). Absolute, relative
@@ -12,24 +13,25 @@ and continuous pan all work; a 0.1-unit pan settles in 1.4 s or less. Calibrated
 RTSP frames: pan 186 deg/unit, tilt 44 deg/unit (facts in CLAUDE.md Gotchas).
 
 ## In progress
-- Chapter 2: Aaron reviews (batch until DONE); then Claude publishes on Vocus from
-  `docs/blog/02-sound-map.vocus.md`.
-- Chapter 2 opening picture is made in Gemini; download waits for Aaron's OK.
+- None.
 
 ## Blockers (needs Aaron)
 - Buy the Sipeed 6+1 mic board with the MA-USB8 USB board; check the seller ships
-  the USB board (raw 6 channels over USB), not the bare I2S 2. Aaron: review chapter 2. · Hours: 1
-3. Aaron: buy Sipeed 6+1 + MA-USB8 (Taobao). · Hours: 0.5
-4. Step 3b: record the 6 raw channels, find the direction with our code. Pass: phone
+  the USB board (raw 6 channels over USB), not the bare I2S board.
+
+## Next (in order)
+1. Aaron: buy Sipeed 6+1 + MA-USB8 (Taobao). · Hours: 0.5
+2. Step 3b: record the 6 raw channels, find the direction with our code. Pass: phone
    playing bird song, direction within 10 deg. · Hours: 1.5
-5. Step 3c: map mic angle to camera angle (mount the board next to the camera).
+3. Step 3c: map mic angle to camera angle (mount the board next to the camera).
    Pass: camera turns to the phone, phone in the telephoto view. Post 3. · Hours: 1.5
-6. Step 4: bird mode: 2-8 kHz band, trigger, turn, save a short clip; pan limited to
+4. Step 4: bird mode: 2-8 kHz band, trigger, turn, save a short clip; pan limited to
    the garden. Pass: one real bird filmed. Post 4 + case. · Hours: 2
-8. LinkedIn post: wait for a real demo (Aaron, 2026-10-25). · Hours: 0.5
+5. LinkedIn post: wait for a real demo (Aaron, 2026-10-25). · Hours: 0.5
 
 ## Known debt (not blocking)
-- None.
+- Chapter 1 (published) still says 聲音地圖; STYLE now uses 聲源定位地圖. Left as is
+  (Aaron, 2026-10-26).
 
 ## Decisions log
 - 2026-10-25: Sipeed 6+1 board steering the Tapo C545D, not UMA-16 + webcam heat map;

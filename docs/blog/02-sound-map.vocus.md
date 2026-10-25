@@ -1,6 +1,6 @@
 # Chapter 2: Vocus publish kit
 
-Not published yet.
+Published 2026-10-26: https://vocus.cc/article/6ade3729fd89780001e8fa1b
 
 | Setting | Value |
 |---|---|
