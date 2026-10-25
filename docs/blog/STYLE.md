@@ -80,6 +80,10 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 | 2-mic ambiguity on a map | 一條紅色直帶 | |
 | Array gain | 多幾隻耳朵一起聽 | |
 
+| DIY build tiers | 四種交通工具：走路（軟體）、腳踏車（小電腦板）、汽車（樹莓派＋麥克風板）、火車（FPGA 大陣列） | |
+| Data rate too high for a small MCU | 吸管太細，喝不了 16 杯飲料 | |
+| Open source / licence | 開源；授權（沒寫授權 = 只能看，不能拿來用） | |
+
 New chapters add rows here; they do not invent a second word for an existing row.
 
 ## 6. Figures
@@ -148,8 +152,9 @@ Aaron asked for this on 2026-10-24. Claude makes it; Aaron does not need to.
    real brand or person. If not, ask Gemini for one new version, saying what to fix.
 4. **Download**: ask Aaron in one line first (file, source, size), as every download
    needs his OK. Then use Gemini's "Download full size image" button; the file lands
-   in `C:\Users\Aaron\Downloads`, either as `Gemini_Generated_Image_*.jpg` or as an
-   unnamed `*.tmp` (chapter 2). Check it is a whole JPEG (opens, ends in `ff d9`).
+   in `C:\Users\Aaron\Downloads` as an unnamed `*.tmp` first, renamed to
+   `Gemini_Generated_Image_*.jpg` some seconds later. Check it is a whole JPEG
+   (opens, ends in `ff d9`).
 5. **Save** as `docs/blog/img/stepN_concept.jpg`, resized to 1600 px wide, JPEG
    quality 85 (about 120 KB). Leave the original in Downloads.
 6. **Caption** under the image: what to notice, then `（AI 生成，Gemini）`.
