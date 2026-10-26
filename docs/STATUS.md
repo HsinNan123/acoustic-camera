@@ -6,6 +6,10 @@ Updated: 2026-10-26
 Step 2 code done: a 16-mic map finds a bird at (20, 10) deg; 23 tests pass.
 Live on Vocus: chapter 1, chapter 2 (https://vocus.cc/article/6ade3729fd89780001e8fa1b)
 and bonus post 1 (https://vocus.cc/article/6ade384efd89780001e92a0c), 2026-10-26.
+Theory posts live 2026-10-26 (Aaron: "Post them", all three at once): bonus 2 how far
+(https://vocus.cc/article/6adf4bf7fd8978000119d30b), bonus 3 echoes
+(https://vocus.cc/article/6adf4cd2fd897800011a0799), bonus 4 angle to pixel
+(https://vocus.cc/article/6adf4d7bfd897800011a314d).
 Direction changed 2026-10-25: Sipeed 6+1 USB board steers the outdoor Tapo C545D
 telephoto lens toward the sound (`docs/research/sipeed-ptz-c545d.md`).
 Step 3a passed 2026-10-25: ONVIF moves the C545D (firmware 1.1.7). Absolute, relative
@@ -13,11 +17,7 @@ and continuous pan all work; a 0.1-unit pan settles in 1.4 s or less. Calibrated
 RTSP frames: pan 186 deg/unit, tilt 44 deg/unit (facts in CLAUDE.md Gotchas).
 
 ## In progress
-- Three theory posts while the board ships (Aaron, 2026-10-26: "三篇我都想學"), drafts
-  for review: bonus 2 how far (`bonus2-how-far.md`), bonus 3 echoes
-  (`bonus3-echoes.md`), bonus 4 angle to pixel (`bonus4-angle-to-pixel.md`). Gemini
-  opening pictures not made: Gemini returned empty replies on 2026-10-26; scenes are
-  in each kit. Plan: publish one a week. · Hours: review 3, publish 1.5.
+- None. Waiting for the mic board.
 
 ## Blockers (needs Aaron)
 - Buy the Sipeed 6+1 mic board with the MA-USB8 USB board; check the seller ships

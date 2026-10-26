@@ -1,6 +1,6 @@
 # 聲音相機 番外篇 2: Vocus publish kit
 
-Not published yet. 上一篇: 番外篇（bonus post 1）.
+Published 2026-10-26: https://vocus.cc/article/6adf4bf7fd8978000119d30b (上一篇: 番外篇, bonus post 1)
 
 | Setting | Value |
 |---|---|

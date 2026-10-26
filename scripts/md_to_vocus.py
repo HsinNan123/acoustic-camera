@@ -41,6 +41,7 @@ md = re.sub(r"\]\(img/", "](" + RAW + "img/", md)
 md = re.sub(r"(?<![(\"])(https://github\.com/[^\s）)]+)", r"[\1](\1)", md)
 
 html = markdown.markdown(md, extensions=["tables", "fenced_code", "sane_lists"])
+html = re.sub(r"(?<=[A-Za-z0-9.,;:])\n\s*(?=[A-Za-z0-9<])", " ", html)  # English keeps its space
 html = re.sub(r"\n\s*", "", html)  # line breaks inside Chinese text would become spaces
 pathlib.Path(sys.argv[2]).write_text(json.dumps({"title": title, "html": html}, ensure_ascii=False),
                                      encoding="utf-8")
