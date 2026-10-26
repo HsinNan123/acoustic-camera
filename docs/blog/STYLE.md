@@ -179,11 +179,13 @@ Aaron asked for this on 2026-10-24. Claude makes it; Aaron does not need to.
    No text in the image: Gemini writes Chinese wrongly. Labels go in the caption.
 3. **Check** the result before saving: it shows the chapter's idea, no text, no
    real brand or person. If not, ask Gemini for one new version, saying what to fix.
-4. **Download**: ask Aaron in one line first (file, source, size), as every download
-   needs his OK. Then use Gemini's "Download full size image" button; the file lands
-   in `C:\Users\Aaron\Downloads` as an unnamed `*.tmp` first, renamed to
-   `Gemini_Generated_Image_*.jpg` some seconds later. Check it is a whole JPEG
-   (opens, ends in `ff d9`).
+4. **Download**: every download needs Aaron's OK. A request to make or post the
+   chapter, or to make the picture, already gives it (Aaron, 2026-10-26); otherwise
+   ask in one line first (file, source, size). Then use Gemini's "Download full size
+   image" button; the file lands in `C:\Users\Aaron\Downloads` as an unnamed `*.tmp`
+   first, renamed to `Gemini_Generated_Image_*.jpg` up to a minute later. Wait for
+   that file before leaving the Gemini page: leaving early cancels the download.
+   Check it is a whole JPEG (opens, ends in `ff d9`).
 5. **Save** as `docs/blog/img/stepN_concept.jpg`, resized to 1600 px wide, JPEG
    quality 85 (about 120 KB). Leave the original in Downloads.
 6. **Caption** under the image: what to notice, then `（AI 生成，Gemini）`.
