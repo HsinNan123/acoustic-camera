@@ -28,3 +28,10 @@ def sipeed6(radius=0.040):
     """Sipeed MicArray outer ring: 6 mics on a circle (centre mic unused)."""
     ang = np.radians([90, 30, 330, 270, 210, 150])
     return np.column_stack([radius * np.cos(ang), radius * np.sin(ang), np.zeros(6)])
+
+
+def mirror(point, plane_point, normal):
+    """`point` reflected in a flat surface (a wall, the ground): where its echo seems to come from."""
+    n = np.asarray(normal, dtype=float) / np.linalg.norm(normal)
+    p = np.asarray(point, dtype=float)
+    return p - 2 * ((p - plane_point) @ n) * n

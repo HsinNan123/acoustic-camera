@@ -94,6 +94,20 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 | Why weapon words are safe here | 拍鳥的人把拍鳥叫「打鳥」，長鏡頭叫「大砲」；工具都是拿來聽鳥、看鳥 | 射鳥, 打下來 |
 | Open source / licence | 開源；授權（沒寫授權 = 只能看，不能拿來用） | |
 
+| Spreading loss | 噴漆：離越遠，噴到的範圍越大，顏色越淡。距離加倍，聲音小 4 倍 | 手電筒 (taken) |
+| Air absorption | 遠處的打雷只剩轟隆隆：高音在空氣裡掉得比較快 | |
+| Song vs background sound | 在吵雜的教室裡聽悄悄話 | |
+| Reflection | 撞球碰到桌邊彈回來 | |
+| Image source | 假鳥（回音好像從它那裡傳來） | 鬼影 (taken) |
+| Listen to the first arrival only | 浴室裡也聽得出朋友在哪：大腦相信最先到的聲音 | |
+| Field of view | 紙筒：長紙筒（長鏡頭）看得窄，短紙筒（廣角）看得寬 | |
+| Pixel | 像素（畫面上的一個小格子） | |
+| Angle to pixel | 針孔相機：紙箱上戳一個小洞 | |
+| More pixels per degree at the edge | 傍晚的影子拉得長 | |
+| Measuring a turn from two frames | 疊兩張描圖紙，推到圖案對齊 | |
+| Gear slack | 腳踏車鏈條鬆鬆的；每次從同一邊轉過去 | |
+| Two viewpoints differ | 閉一隻眼看手指，手指好像跳了一下 | |
+
 New chapters add rows here; they do not invent a second word for an existing row.
 
 ## 6. Figures

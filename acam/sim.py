@@ -40,3 +40,14 @@ def two_mic_plane_wave(source, fs, angle_deg, d, snr_db=None, seed=None, c=SPEED
         mic0 = mic0 + rng.normal(0, noise_rms, len(mic0))
         mic1 = mic1 + rng.normal(0, noise_rms, len(mic1))
     return mic0, mic1
+
+
+def point_source(source, fs, mics, pos, c=SPEED_OF_SOUND):
+    """Signals at every mic (rows) from a nearby source at `pos` (metres).
+
+    Each mic hears it `distance / c` later and `1 / distance` as loud. Echoes are
+    point sources too, at the mirror position (`geometry.mirror`). Delays wrap around,
+    so pad `source` with zeros longer than the longest path.
+    """
+    dist = np.linalg.norm(np.asarray(mics) - np.asarray(pos), axis=1)
+    return np.array([fractional_delay(source, d / c, fs) / d for d in dist])

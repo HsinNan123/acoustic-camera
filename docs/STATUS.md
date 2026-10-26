@@ -13,7 +13,11 @@ and continuous pan all work; a 0.1-unit pan settles in 1.4 s or less. Calibrated
 RTSP frames: pan 186 deg/unit, tilt 44 deg/unit (facts in CLAUDE.md Gotchas).
 
 ## In progress
-- None.
+- Three theory posts while the board ships (Aaron, 2026-10-26: "三篇我都想學"), drafts
+  for review: bonus 2 how far (`bonus2-how-far.md`), bonus 3 echoes
+  (`bonus3-echoes.md`), bonus 4 angle to pixel (`bonus4-angle-to-pixel.md`). Gemini
+  opening pictures not made: Gemini returned empty replies on 2026-10-26; scenes are
+  in each kit. Plan: publish one a week. · Hours: review 3, publish 1.5.
 
 ## Blockers (needs Aaron)
 - Buy the Sipeed 6+1 mic board with the MA-USB8 USB board; check the seller ships
