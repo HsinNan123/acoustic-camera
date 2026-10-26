@@ -16,7 +16,7 @@ Not published yet. 上一篇: 番外篇 3.
 Legal: no third-party pictures; figures are drawn by the post's script, the opening
 picture by Gemini.
 
-Gemini scene (STYLE section 9, not made yet): "The microphone board on the house wall
+Gemini scene (STYLE section 9, made 2026-10-26): "The microphone board on the house wall
 and, right next to it, a white outdoor camera with a long lens on a turning base. A
 dotted arrow from the board points at the bird in the garden tree; the camera turns
 along the same arrow, and a rectangle frame around the bird shows what the long lens

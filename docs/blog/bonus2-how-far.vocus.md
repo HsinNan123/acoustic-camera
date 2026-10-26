@@ -16,7 +16,7 @@ Not published yet. 上一篇: 番外篇（bonus post 1）.
 Legal: no third-party pictures; figures are drawn by the post's script, the opening
 picture by Gemini. Numbers from papers and standards are cited in the post's 資料來源.
 
-Gemini scene (STYLE section 9, not made yet): "Side view of a garden. The microphone
+Gemini scene (STYLE section 9, made 2026-10-26): "Side view of a garden. The microphone
 board hangs on the house wall. Two songbirds sing in trees: one in a tree close to the
 house, one in a tree far away. From each bird, soft sound rings spread out and grow
 fainter as they travel; the rings from the far bird are very pale by the time they

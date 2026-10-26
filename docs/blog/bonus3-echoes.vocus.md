@@ -16,7 +16,7 @@ Not published yet. 上一篇: 番外篇 2.
 Legal: no third-party pictures; figures are drawn by the post's script, the opening
 picture by Gemini.
 
-Gemini scene (STYLE section 9, not made yet): "Side view of a house wall with the
+Gemini scene (STYLE section 9, made 2026-10-26): "Side view of a house wall with the
 microphone board on it, above a paved courtyard. The songbird sings in a tree. One
 line of sound goes straight to the board; another bounces off the paving, like a
 billiard ball off a table edge, and then goes up to the board. Under the paving, a
