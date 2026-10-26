@@ -4,3 +4,5 @@ matplotlib
 pytest
 onvif-zeep
 opencv-python
+birdnet==1.3.0
+ai-edge-litert

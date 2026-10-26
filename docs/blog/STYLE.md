@@ -108,6 +108,13 @@ Order: metaphor → plain explanation → figure → how to read the figure → 
 | Gear slack | 腳踏車鏈條鬆鬆的；每次從同一邊轉過去 | |
 | Two viewpoints differ | 閉一隻眼看手指，手指好像跳了一下 | |
 
+| Spectrogram | 聲音的樂譜（聲譜圖）：音越高畫越上面，時間往右走 | 聲紋 |
+| Species-recognition AI | 會聽的圖鑑；聽多了同學的聲音，不用回頭就知道是誰 | |
+| Model confidence | 把握（0 到 100%，越高越確定） | 機率, 信心分數 |
+| Location and season filter | 在台灣的公園聽到鳥叫，不會猜企鵝 | |
+| AI that names and locates (SELD) | 老師點名聽到「有！」，一轉頭就知道是誰、坐在哪裡 | |
+| Board finds direction, AI names the bird | 分工：一個人拿望遠鏡找，一個人翻圖鑑 | |
+
 New chapters add rows here; they do not invent a second word for an existing row.
 
 ## 6. Figures

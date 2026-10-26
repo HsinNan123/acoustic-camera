@@ -14,7 +14,8 @@ Volatile state (stage, blockers, next, decisions) is `docs/STATUS.md`.
 - **Goals, in order:** 1. learn the method and explain it; 2. a public build log with a
   demo GIF per step; 3. a working live demo on a real bird.
 - **Stack and where it runs:** Python 3.13, numpy, scipy, matplotlib (simulation and
-  plots), pytest, onvif-zeep (camera PTZ), opencv-python (RTSP video); later sounddevice (audio in). Runs
+  plots), pytest, onvif-zeep (camera PTZ), opencv-python (RTSP video), birdnet + ai-edge-litert (species AI, bonus 5; models CC
+  BY-NC-SA 4.0, hobby use only); later sounddevice (audio in). Runs
   on Aaron's Windows laptop. No server, no web. Public repo:
   https://github.com/HsinNan123/acoustic-camera
 - **Scale:** one user, one machine. Rules out cloud, accounts, database.

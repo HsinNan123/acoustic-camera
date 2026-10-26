@@ -17,7 +17,10 @@ and continuous pan all work; a 0.1-unit pan settles in 1.4 s or less. Calibrated
 RTSP frames: pan 186 deg/unit, tilt 44 deg/unit (facts in CLAUDE.md Gotchas).
 
 ## In progress
-- None. Waiting for the mic board.
+- Bonus post 5, AI that names birds, with a BirdNET demo (Aaron, 2026-10-26), draft
+  for review: `docs/blog/bonus5-ai-birds.md`. BirdNET named the right family (鵯) but
+  not 白頭翁 until the location filter; on the board's noisy copy it picked 烏頭翁.
+  · Hours: review 1.5, publish 0.5.
 
 ## Blockers (needs Aaron)
 - Buy the Sipeed 6+1 mic board with the MA-USB8 USB board; check the seller ships
