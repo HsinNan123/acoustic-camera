@@ -28,7 +28,7 @@ Steps 1-3 run on simulated sound, so no hardware is needed to follow along.
 | Bonus 2 | How far away a bird can still be found | [`scripts/bonus2_how_far.py`](scripts/bonus2_how_far.py) | [Vocus](https://vocus.cc/article/6adf4bf7fd8978000119d30b) |
 | Bonus 3 | Echoes from the ground and the wall | [`scripts/bonus3_echoes.py`](scripts/bonus3_echoes.py) | [Vocus](https://vocus.cc/article/6adf4cd2fd897800011a0799) |
 | Bonus 4 | From an angle to a turn and a pixel | [`scripts/bonus4_angle_to_pixel.py`](scripts/bonus4_angle_to_pixel.py) | [Vocus](https://vocus.cc/article/6adf4d7bfd897800011a314d) |
-| Bonus 5 | Can AI tell which bird is singing, and where? (BirdNET demo) | [`scripts/bonus5_birdnet.py`](scripts/bonus5_birdnet.py) | draft |
+| Bonus 5 | Can AI tell which bird is singing, and where? (BirdNET demo) | [`scripts/bonus5_birdnet.py`](scripts/bonus5_birdnet.py) | [Vocus](https://vocus.cc/article/6adf66cefd897800011f7961) |
 | 3 | The map lines up with the video | not yet | not yet |
 | 4 | It works with a real array | not yet | not yet |
 | 5 | It finds a real bird | not yet | not yet |

@@ -236,8 +236,11 @@ Aaron with it):
    - The summary box is pre-filled: select all, delete, then type.
    - The keyword box is pre-filled with auto words: remove them all.
    - A theme tag opens a dialog; confirm with 確定投稿.
-   - After the last keyword, press Escape: an open suggestion list catches the click
-     on 下一步 and adds a wrong keyword (2026-10-26: 鼾聲聲學分析).
+   - The keyword box adds its top suggestion when it loses focus, even after Escape
+     (2026-10-26: 鼾聲聲學分析, 開源專案). After 下一步, if the page did not move on,
+     read the keywords again, remove the extra one, then click 下一步.
+   - 上篇 is filled with the account's newest post, which may be another series:
+     check it and pick this series' previous post by typing its title.
    - Start drafts from 創作 → 文章; `vocus.cc/new` shows an error page.
 6. Stop before 確認發佈 and show Aaron the kit and the draft, unless his request
    already said to publish with this kit.

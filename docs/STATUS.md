@@ -10,6 +10,8 @@ Theory posts live 2026-10-26 (Aaron: "Post them", all three at once): bonus 2 ho
 (https://vocus.cc/article/6adf4bf7fd8978000119d30b), bonus 3 echoes
 (https://vocus.cc/article/6adf4cd2fd897800011a0799), bonus 4 angle to pixel
 (https://vocus.cc/article/6adf4d7bfd897800011a314d).
+Bonus 5, AI names birds with a BirdNET demo, live 2026-10-26
+(https://vocus.cc/article/6adf66cefd897800011f7961).
 Direction changed 2026-10-25: Sipeed 6+1 USB board steers the outdoor Tapo C545D
 telephoto lens toward the sound (`docs/research/sipeed-ptz-c545d.md`).
 Step 3a passed 2026-10-25: ONVIF moves the C545D (firmware 1.1.7). Absolute, relative
@@ -17,10 +19,7 @@ and continuous pan all work; a 0.1-unit pan settles in 1.4 s or less. Calibrated
 RTSP frames: pan 186 deg/unit, tilt 44 deg/unit (facts in CLAUDE.md Gotchas).
 
 ## In progress
-- Bonus post 5, AI that names birds, with a BirdNET demo (Aaron, 2026-10-26), draft
-  for review: `docs/blog/bonus5-ai-birds.md`. BirdNET named the right family (鵯) but
-  not 白頭翁 until the location filter; on the board's noisy copy it picked 烏頭翁.
-  · Hours: review 1.5, publish 0.5.
+- None. Waiting for the mic board.
 
 ## Blockers (needs Aaron)
 - Buy the Sipeed 6+1 mic board with the MA-USB8 USB board; check the seller ships
